@@ -1,4 +1,4 @@
-package edu.neumont.hellraisers.javabullethell.ui;
+package edu.neumont.hellraisers.javabullethell;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
