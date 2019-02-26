@@ -7,8 +7,13 @@ public class GameController {
 	private Board board;
 	private MainView mainView;
 	
+	public GameController(MainView view) {
+		this.mainView = view;
+		this.board = new Board();
+	}
+	
 	public void init() {
-		
+		mainView.getStage().show();
 	}
 	
 	public void onPlay() {

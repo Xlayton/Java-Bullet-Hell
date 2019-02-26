@@ -35,4 +35,13 @@ public class MainView {
 	public void registerController(GameController control) {
 		this.control = control;
 	}
+	
+	public void setStage(Stage stage) {
+		this.stage = stage;
+	}
+	
+	public Stage getStage() {
+		return stage;
+	}
+	
 }
