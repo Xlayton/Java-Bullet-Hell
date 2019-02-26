@@ -10,7 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
-public class GameView extends View{
+public class GameView{
 	private Scene view;
 	private Group group;
 	private Canvas canvas;

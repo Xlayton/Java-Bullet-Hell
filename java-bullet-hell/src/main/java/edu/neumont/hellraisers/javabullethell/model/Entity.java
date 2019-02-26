@@ -6,6 +6,10 @@ public abstract class Entity {
 	private int width;
 	private int height;
 	private boolean isDead;
+	
+	public Entity(int health, int width, int height, Coordinate location) {
+		
+	}
 
 	public void shoot(Direction direction) {
 		//TODO
@@ -39,5 +43,9 @@ public abstract class Entity {
 	
 	public boolean isDead() {
 		return isDead;
+	}
+	
+	public void setHealth(int health) {
+		this.health = health;
 	}
 }
