@@ -9,9 +9,8 @@ public class GameStart extends Application {
 	public void start(Stage arg0) throws Exception {
 		
 	}
-	
+  
 	public static void main(String[] args) {
 		
 	}
-
 }
