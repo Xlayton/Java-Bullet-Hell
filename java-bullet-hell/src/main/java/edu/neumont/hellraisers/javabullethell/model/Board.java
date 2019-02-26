@@ -27,5 +27,13 @@ public class Board {
 	
 	public Player getPlayer() {
 		return player;
-	} 
+	}
+	
+	public int getWidth() {
+		return BOARD_WIDTH;
+	}
+	
+	public int getHeight() {
+		return BOARD_HEIGHT;
+	}
 }
