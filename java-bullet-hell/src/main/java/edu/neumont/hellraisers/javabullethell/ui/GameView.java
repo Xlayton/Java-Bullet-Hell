@@ -18,6 +18,12 @@ public class GameView{
 	private GraphicsContext context;
 	private GameController control;
 	
+	public void createCanvas(Board board) {
+		group = new Group();
+		canvas = new Canvas(board.getWidth(),board.getHeight());
+		context = canvas.getGraphicsContext2D();
+	}
+	
 	public void updateDisplay(Board board) {
 		
 	}
