@@ -24,4 +24,8 @@ public class OptionView {
 	public void registerController(GameController control) {
 		this.controller = control;
 	}
+	
+	public Scene getView() {
+		return view;
+	}
 }

@@ -4,7 +4,7 @@ import edu.neumont.hellraisers.javabullethell.GameController;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 
-public class MenuView {
+public class MainMenuView {
 	private Scene view;
 	private GameController controller;
 	
@@ -14,16 +14,20 @@ public class MenuView {
 	
 	@FXML
 	public void onPlay() {
-		
+		controller.onPlay();
 	}
 	
 	@FXML
 	public void onOption() {
-		
+		controller.onOption();
 	}
 	
 	@FXML
 	public void onAbout() {
 		
+	}
+	
+	public Scene getView() {
+		return view;
 	}
 }

@@ -14,11 +14,15 @@ public class EndView {
 	
 	@FXML
 	public void onMenu() {
-		
+		control.onMenu();
 	}
 	
 	@FXML
 	public void onQuit() {
-		
+		control.onQuit();
+	}
+	
+	public Scene getView() {
+		return view;
 	}
 }
