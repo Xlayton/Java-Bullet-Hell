@@ -1,54 +1,46 @@
 package edu.neumont.hellraisers.javabullethell;
 
 import edu.neumont.hellraisers.javabullethell.model.Board;
-import edu.neumont.hellraisers.javabullethell.model.Enemy;
-import edu.neumont.hellraisers.javabullethell.model.Entity;
-import edu.neumont.hellraisers.javabullethell.model.Player;
-import edu.neumont.hellraisers.javabullethell.model.Projectile;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
+import edu.neumont.hellraisers.javabullethell.ui.MainView;
 
 public class GameController {
-	private Scene view;
-	private Group group;
-	private Canvas canvas;
-	private GraphicsContext context;
-	private GameController control;
+	private Board board;
+	private MainView mainView;
 	
-	public GameController() {
+	public void init() {
 		
 	}
 	
-	public void updateDisplay(Board board) {
+	public void onPlay() {
 		
 	}
 	
-	public void updateController(GameController control) {
-		this.control = control;
-	}
-	
-	private void drawPlayer(Player player) {
+	public void onOption() {
 		
 	}
 	
-	private void drawEnemy(Enemy enemy) {
+	public void onMenu() {
 		
 	}
 	
-	private void drawProjectiles(Projectile[] projectiles) {
+	public void onQuit() {
 		
 	}
 	
-	private void drawScore(Player player) {
+	public void createEnemy() {
 		
 	}
 	
-	private void drawHealth(Entity entity) {
+	public void createPlayer() {
 		
 	}
 	
+	public void removeEnemy() {
+		
+	}
 	
+	public void removePlayer() {
+		
+	}
 	
 }

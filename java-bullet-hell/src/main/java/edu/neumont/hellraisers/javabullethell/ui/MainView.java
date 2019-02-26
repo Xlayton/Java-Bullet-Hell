@@ -4,7 +4,7 @@ import edu.neumont.hellraisers.javabullethell.GameController;
 import edu.neumont.hellraisers.javabullethell.model.SceneSelection;
 import javafx.stage.Stage;
 
-public class MainView extends View {
+public class MainView {
 	private GameController control;
 	private Stage stage;
 	
