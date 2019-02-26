@@ -10,8 +10,8 @@ public class MainView {
 	
 	private MainMenuView menuView;
 	private GameView gameView;
-	private GameOverView endView;
-	private SettingsView optionView;
+	private EndView endView;
+	private OptionView optionView;
 	
 	public void switchScene(SceneSelection selection){
 		switch(selection) {
