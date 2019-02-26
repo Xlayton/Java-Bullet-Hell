@@ -1,3 +1,4 @@
+package edu.neumont.hellraisers.javabullethell.ui;
 
 import edu.neumont.hellraisers.javabullethell.GameController;
 import edu.neumont.hellraisers.javabullethell.model.Board;
@@ -23,6 +24,10 @@ public class GameView{
 	
 	public void updateController(GameController control) {
 		this.control = control;
+	}
+	
+	public Scene getView() {
+		return view;
 	}
 	
 	private void drawPlayer(Player player) {
