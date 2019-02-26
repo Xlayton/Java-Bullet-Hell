@@ -6,4 +6,14 @@ public class Player extends Entity {
 	public void gainHealth() {
 		//TODO
 	}
+
+	@Override
+	public void onDeath() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public long getScore() {
+		return score;
+	}
 }

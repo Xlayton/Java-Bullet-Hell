@@ -6,4 +6,38 @@ public abstract class Entity {
 	private int width;
 	private int height;
 	private boolean isDead;
+
+	public void shoot(Direction direction) {
+		//TODO
+	}
+	
+	public void takeDamage(int amt) {
+		//TODO
+	}
+	
+	public void move(int amtX, int amtY) {
+		//TODO
+	}
+	
+	public abstract void onDeath();
+	
+	public int getHealth() {
+		return health;
+	}
+	
+	public Coordinate getLocation() {
+		return location;
+	}
+	
+	public int getWidth() {
+		return width;
+	}
+	
+	public int getHeight() {
+		return height;
+	}
+	
+	public boolean isDead() {
+		return isDead;
+	}
 }
