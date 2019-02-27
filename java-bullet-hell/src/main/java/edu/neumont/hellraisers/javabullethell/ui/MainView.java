@@ -32,6 +32,11 @@ public class MainView {
 			stage.setScene(endView.getView());
 			break;
 		case GAME_VIEW:
+			if (gameView == null) {
+				gameView = new GameView();
+				gameView.updateController(control);
+				gameView.createCanvas(control.getBoard());
+			}
 			stage.setScene(gameView.getView());
 			break;
 		case MENU_VIEW:
@@ -56,5 +61,4 @@ public class MainView {
 	public Stage getStage() {
 		return stage;
 	}
-	
 }

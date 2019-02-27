@@ -8,7 +8,10 @@ public abstract class Entity {
 	private boolean isDead;
 	
 	public Entity(int health, int width, int height, Coordinate location) {
-		
+		this.location = location;
+		this.width = width;
+		this.height = height;
+		this.health = health;
 	}
 
 	public void shoot(Direction direction) {
@@ -20,7 +23,8 @@ public abstract class Entity {
 	}
 	
 	public void move(int amtX, int amtY) {
-		//TODO
+		location.addX(amtX);
+		location.addY(amtY);
 	}
 	
 	public abstract void onDeath();
