@@ -70,12 +70,10 @@ public class GameController {
 		
 	}
 	
-<<<<<<< HEAD
 	public Board getBoard() {
 		return board;
 	}
 	
-=======
 	public double getDifficulty() {
 		return difficulty;
 	}
@@ -83,7 +81,4 @@ public class GameController {
 	public double getSound(){
 		return sound;
 	}
-	
-	
->>>>>>> 342ae8c7b867dbd0bd3d45bbb258a740f20e8654
 }
