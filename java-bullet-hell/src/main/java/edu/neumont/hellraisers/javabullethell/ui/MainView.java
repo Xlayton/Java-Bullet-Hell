@@ -1,7 +1,12 @@
 package edu.neumont.hellraisers.javabullethell.ui;
 
+import java.io.IOException;
+
 import edu.neumont.hellraisers.javabullethell.GameController;
 import edu.neumont.hellraisers.javabullethell.model.SceneSelection;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class MainView {
@@ -12,6 +17,14 @@ public class MainView {
 	private GameView gameView;
 	private EndView endView;
 	private OptionView optionView;
+	
+	public void init() throws IOException {
+		FXMLLoader optionLoad = new FXMLLoader(this.getClass().getClassLoader().getResource("OptionView.fxml"));
+		Parent optionParent = optionLoad.load();
+		this.optionView = optionLoad.getController();
+		optionView.setView(new Scene(optionParent));
+		optionView.registerController(control);
+	}
 	
 	public void switchScene(SceneSelection selection){
 		switch(selection) {
