@@ -1,7 +1,8 @@
 package edu.neumont.hellraisers.javabullethell.model;
 
 public enum EnemyType {
-	BASIC(25, 15, 15);
+	BASIC(25, 15, 15),
+	BIGBOI(500,20,20);
 	
 	
 	private final int health;

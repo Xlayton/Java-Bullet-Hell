@@ -21,6 +21,7 @@ public class MainView {
 		case GAME_VIEW:
 			if (gameView == null) {
 				gameView = new GameView();
+				gameView.updateController(control);
 				gameView.createCanvas(control.getBoard());
 			}
 			stage.setScene(gameView.getView());

@@ -1,6 +1,9 @@
 package edu.neumont.hellraisers.javabullethell;
 
 import edu.neumont.hellraisers.javabullethell.model.Board;
+import edu.neumont.hellraisers.javabullethell.model.Coordinate;
+import edu.neumont.hellraisers.javabullethell.model.Enemy;
+import edu.neumont.hellraisers.javabullethell.model.EnemyType;
 import edu.neumont.hellraisers.javabullethell.model.SceneSelection;
 import edu.neumont.hellraisers.javabullethell.ui.MainView;
 
@@ -17,6 +20,7 @@ public class GameController {
 		mainView.getStage().show();
 		mainView.registerController(this);
 		mainView.switchScene(SceneSelection.GAME_VIEW);
+		createEnemy();
 	}
 	
 	public void onPlay() {
@@ -36,7 +40,7 @@ public class GameController {
 	}
 	
 	public void createEnemy() {
-		
+		board.getEnemies().add(new Enemy(EnemyType.BIGBOI, new Coordinate(0,0)));
 	}
 	
 	public void createPlayer() {
