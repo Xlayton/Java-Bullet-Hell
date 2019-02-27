@@ -10,6 +10,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 
 public class GameView{
 	private Scene view;
@@ -22,10 +23,11 @@ public class GameView{
 		group = new Group();
 		canvas = new Canvas(board.getWidth(),board.getHeight());
 		context = canvas.getGraphicsContext2D();
+		view = new Scene(group,board.getWidth(),board.getHeight());
 	}
 	
 	public void updateDisplay(Board board) {
-		
+		drawPlayer(board.getPlayer());
 	}
 	
 	public void updateController(GameController control) {
@@ -37,7 +39,8 @@ public class GameView{
 	}
 	
 	private void drawPlayer(Player player) {
-		
+		Image temp = new Image("PlayerExample1.png");
+		context.drawImage(temp,player.getLocation().getX(),player.getLocation().getY());
 	}
 	
 	private void drawEnemy(Enemy enemy) {

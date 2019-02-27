@@ -1,23 +1,39 @@
 package edu.neumont.hellraisers.javabullethell;
 
+import java.io.IOException;
+
 import edu.neumont.hellraisers.javabullethell.model.Board;
+import edu.neumont.hellraisers.javabullethell.model.SceneSelection;
 import edu.neumont.hellraisers.javabullethell.ui.MainView;
 
 public class GameController {
 	private Board board;
 	private MainView mainView;
+	private double difficulty = 2.0;
+	private double sound = 75.0;
 	
 	public GameController(MainView view) {
 		this.mainView = view;
 		this.board = new Board();
+		mainView.registerController(this);
+		try {
+			mainView.init();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		//YUP
+		mainView.switchScene(SceneSelection.OPTION_VIEW);
+		// OH YEAH YEAH
 	}
 	
 	public void init() {
 		mainView.getStage().show();
+		mainView.registerController(this);
+		mainView.switchScene(SceneSelection.GAME_VIEW);
 	}
 	
 	public void onPlay() {
-		
+		mainView.switchScene(SceneSelection.GAME_VIEW);
 	}
 	
 	public void onOption() {
@@ -30,6 +46,12 @@ public class GameController {
 	
 	public void onQuit() {
 		
+	}
+	
+	public void onApply(double difficulty, double sound) {
+		this.difficulty = difficulty;
+		this.sound = sound;
+		System.out.println(this.difficulty + " " + this.sound);
 	}
 	
 	public void createEnemy() {
@@ -48,4 +70,20 @@ public class GameController {
 		
 	}
 	
+<<<<<<< HEAD
+	public Board getBoard() {
+		return board;
+	}
+	
+=======
+	public double getDifficulty() {
+		return difficulty;
+	}
+	
+	public double getSound(){
+		return sound;
+	}
+	
+	
+>>>>>>> 342ae8c7b867dbd0bd3d45bbb258a740f20e8654
 }
