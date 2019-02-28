@@ -3,6 +3,9 @@ package edu.neumont.hellraisers.javabullethell;
 import java.io.IOException;
 
 import edu.neumont.hellraisers.javabullethell.model.Board;
+import edu.neumont.hellraisers.javabullethell.model.Coordinate;
+import edu.neumont.hellraisers.javabullethell.model.Enemy;
+import edu.neumont.hellraisers.javabullethell.model.EnemyType;
 import edu.neumont.hellraisers.javabullethell.model.SceneSelection;
 import edu.neumont.hellraisers.javabullethell.ui.MainView;
 
@@ -21,15 +24,14 @@ public class GameController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		//YUP
-		mainView.switchScene(SceneSelection.OPTION_VIEW);
-		// OH YEAH YEAH
+		mainView.switchScene(SceneSelection.GAME_VIEW);
 	}
 	
 	public void init() {
 		mainView.getStage().show();
 		mainView.registerController(this);
 		mainView.switchScene(SceneSelection.GAME_VIEW);
+		createEnemy();
 	}
 	
 	public void onPlay() {
@@ -55,7 +57,7 @@ public class GameController {
 	}
 	
 	public void createEnemy() {
-		
+		board.getEnemies().add(new Enemy(EnemyType.BIGBOI, new Coordinate(0,0)));
 	}
 	
 	public void createPlayer() {
@@ -73,7 +75,7 @@ public class GameController {
 	public Board getBoard() {
 		return board;
 	}
-	
+  
 	public double getDifficulty() {
 		return difficulty;
 	}
