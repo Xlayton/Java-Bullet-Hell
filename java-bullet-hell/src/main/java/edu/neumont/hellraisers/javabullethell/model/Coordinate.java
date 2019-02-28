@@ -24,4 +24,9 @@ public class Coordinate {
 	public int getY() {
 		return Y;
 	}
+	
+	@Override
+	public String toString() {
+		return "X: " + X + " Y: " + Y;
+	}
 }

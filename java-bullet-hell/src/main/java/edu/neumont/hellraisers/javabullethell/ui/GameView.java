@@ -7,11 +7,15 @@ import edu.neumont.hellraisers.javabullethell.model.Entity;
 import edu.neumont.hellraisers.javabullethell.model.Player;
 import edu.neumont.hellraisers.javabullethell.model.Projectile;
 import javafx.animation.AnimationTimer;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 public class GameView{
@@ -21,11 +25,71 @@ public class GameView{
 	private GraphicsContext context;
 	private GameController control;
 	
+	private int moveX = 0;
+	private int moveY = 0;
+	private boolean[] keyPressed = {false,false,false,false};
+	
+	private final int speed = 10;
+	
 	public void createCanvas(Board board) {
 		canvas = new Canvas(board.getWidth(),board.getHeight());
 		group = new Group(canvas);
 		context = canvas.getGraphicsContext2D();
 		view = new Scene(group,board.getWidth(),board.getHeight());
+		context.getCanvas().setOnMouseMoved(new EventHandler<MouseEvent>(){
+
+			@Override
+			public void handle(MouseEvent event) {
+				System.out.println(":O");
+			}
+			
+		});
+		
+		view.setOnKeyPressed(key -> {
+			if (key.getCode().equals(KeyCode.W)) {
+				if (!keyPressed[0]) {
+					keyPressed[0] = true;
+					moveY -= speed;
+				}
+			}
+			if (key.getCode().equals(KeyCode.A)) {
+				if (!keyPressed[1]) {
+					keyPressed[1] = true;
+					moveX -= speed;
+				}
+			}
+			if (key.getCode().equals(KeyCode.S)) {
+				if (!keyPressed[2]) {
+					keyPressed[2] = true;
+					moveY += speed;
+				}
+			}
+			if (key.getCode().equals(KeyCode.D)) {
+				if (!keyPressed[3]) {
+					keyPressed[3] = true;
+					moveX += speed;
+				}
+			}
+		});
+		
+		view.setOnKeyReleased(key ->{
+			if (key.getCode().equals(KeyCode.W)) {
+				keyPressed[0] = false;
+				moveY += speed;
+			}
+			if (key.getCode().equals(KeyCode.A)) {
+				keyPressed[1] = false;
+				moveX += speed;
+			}
+			if (key.getCode().equals(KeyCode.S)) {
+				keyPressed[2] = false;
+				moveY -= speed;
+			}
+			if (key.getCode().equals(KeyCode.D)) {
+				keyPressed[3] = false;
+				moveX -= speed;
+			}
+		});
 		new AnimationTimer() {
 
 			@Override
@@ -37,7 +101,12 @@ public class GameView{
 		}.start();
 	}
 	
+	private void movePlayer() {
+		control.getBoard().getPlayer().move(moveX,moveY);
+	}
+	
 	public void updateDisplay(Board board) {
+		movePlayer();
 		drawPlayer(board.getPlayer());
 		for (Enemy enemy : board.getEnemies()) {
 			drawEnemy(enemy);
@@ -56,7 +125,6 @@ public class GameView{
 	private void drawPlayer(Player player) {
 		Image temp = new Image("playerx32.png");
 		context.drawImage(temp,player.getLocation().getX(),player.getLocation().getY(),64,64);
-		player.move(1, 1);
 	}
 	
 	private void drawEnemy(Enemy enemy) {
