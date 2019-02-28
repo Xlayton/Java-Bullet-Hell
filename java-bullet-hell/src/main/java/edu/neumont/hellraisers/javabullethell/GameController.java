@@ -21,9 +21,7 @@ public class GameController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		//YUP
-		mainView.switchScene(SceneSelection.OPTION_VIEW);
-		// OH YEAH YEAH
+		mainView.switchScene(SceneSelection.GAME_VIEW);
 	}
 	
 	public void init() {
