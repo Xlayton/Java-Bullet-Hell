@@ -3,23 +3,15 @@ BorderPane {
 	-fx-min-height: 800px;
 }
 
-Slider {
-	-fx-max-width:600px;
-}
-
 .title {
 	-fx-font-size: 48px;
-}
-
-Label {
-	-fx-font-size: 32px;
 }
 
 .btn {
 	-fx-background-color: #BBBBBB;
 	-fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.9) , 2, 0.0 , 0 , 1 );
-	-fx-min-height:75px;
-	-fx-min-width:150px;
+	-fx-min-height:150px;
+	-fx-min-width:700px;
 	-fx-border-color: #000;
 	-fx-border-width: 1px;
 	-fx-border-style: solid;
