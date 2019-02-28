@@ -20,7 +20,7 @@ public class GameController {
 		this.board = new Board();
 		mainView.registerController(this);
 		try {
-			mainView.init();
+			mainView.init(board);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
