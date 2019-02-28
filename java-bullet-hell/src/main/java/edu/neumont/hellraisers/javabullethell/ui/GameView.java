@@ -55,7 +55,7 @@ public class GameView{
 	
 	private void drawPlayer(Player player) {
 		Image temp = new Image("playerx32.png");
-		context.drawImage(temp,player.getLocation().getX(),player.getLocation().getY(),100,100);
+		context.drawImage(temp,player.getLocation().getX(),player.getLocation().getY(),64,64);
 		player.move(1, 1);
 	}
 	
@@ -72,7 +72,7 @@ public class GameView{
 			image = new Image("projectile.png");
 			break;
 		}
-		context.drawImage(image,enemy.getLocation().getX(),enemy.getLocation().getY(), enemy.getWidth()*10, enemy.getHeight()*10);
+		context.drawImage(image,enemy.getLocation().getX(),enemy.getLocation().getY(), enemy.getWidth(), enemy.getHeight());
 	}
 	
 	private void drawProjectiles(Projectile[] projectiles) {
