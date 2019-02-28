@@ -22,8 +22,18 @@ public class MainView {
 		FXMLLoader optionLoad = new FXMLLoader(this.getClass().getClassLoader().getResource("OptionView.fxml"));
 		Parent optionParent = optionLoad.load();
 		this.optionView = optionLoad.getController();
-		optionView.setView(new Scene(optionParent));
-		optionView.registerController(control);
+		this.optionView.setView(new Scene(optionParent));
+		this.optionView.registerController(control);
+		FXMLLoader menuLoad = new FXMLLoader(this.getClass().getClassLoader().getResource("MenuView.fxml"));
+		Parent menuParent = menuLoad.load();
+		this.menuView = menuLoad.getController();
+		this.menuView.setView(new Scene(menuParent));
+		this.menuView.registerController(control);
+		FXMLLoader endLoad = new FXMLLoader(this.getClass().getClassLoader().getResource("EndView.fxml"));
+		Parent endParent = endLoad.load();
+		this.endView = endLoad.getController();
+		this.endView.setView(new Scene(endParent));
+		this.endView.registerController(control);
 	}
 	
 	public void switchScene(SceneSelection selection){
@@ -32,11 +42,6 @@ public class MainView {
 			stage.setScene(endView.getView());
 			break;
 		case GAME_VIEW:
-			if (gameView == null) {
-				gameView = new GameView();
-				gameView.updateController(control);
-				gameView.createCanvas(control.getBoard());
-			}
 			stage.setScene(gameView.getView());
 			break;
 		case MENU_VIEW:

@@ -52,4 +52,8 @@ public abstract class Entity {
 	public void setHealth(int health) {
 		this.health = health;
 	}
+	
+	public void commitDie() {
+		this.isDead = true;
+	}
 }

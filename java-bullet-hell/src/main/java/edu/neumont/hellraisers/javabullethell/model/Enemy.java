@@ -11,7 +11,8 @@ public class Enemy extends Entity{
 	
 	@Override
 	public void onDeath() {
-		// TODO Auto-generated method stub
+		this.commitDie();
+		// TODO
 	}
 	
 	public EnemyType getEnemyType() {

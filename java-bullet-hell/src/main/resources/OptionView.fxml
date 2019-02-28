@@ -5,12 +5,15 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="edu.neumont.hellraisers.javabullethell.ui.OptionView"
 	stylesheets="OptionStyle.css">
 	<top>
-		<Label styleClass="title">Options:</Label>
+		<HBox alignment="center">
+			<Label styleClass="title">Options:</Label>
+		</HBox>
 	</top>
 	<center>
 		<VBox spacing="200" alignment="center">

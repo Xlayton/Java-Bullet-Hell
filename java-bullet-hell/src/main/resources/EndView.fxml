@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Button?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.neumont.hellraisers.javabullethell.ui.EndView" stylesheets="EndStyle.css">
+	<center>
+		<VBox alignment="center" spacing="50">
+			<Label styleClass="endLabel">GAME OVER!</Label>
+			<Label styleClass="endLabel" fx:id="playerScore">Score: 0</Label>
+			<VBox alignment="center">
+				<Button styleClass="btn" onAction="#onQuit">Quit</Button>
+				<Button styleClass="btn" onAction="#onMenu">Main Menu</Button>
+			</VBox>
+		</VBox>
+	</center>
+</BorderPane>
+
