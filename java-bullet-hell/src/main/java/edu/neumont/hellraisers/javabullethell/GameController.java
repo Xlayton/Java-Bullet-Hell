@@ -24,14 +24,12 @@ public class GameController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		mainView.switchScene(SceneSelection.GAME_VIEW);
 	}
 	
 	public void init() {
 		mainView.getStage().show();
 		mainView.registerController(this);
-		mainView.switchScene(SceneSelection.GAME_VIEW);
-		createEnemy();
+		mainView.switchScene(SceneSelection.MENU_VIEW);
 	}
 	
 	public void onPlay() {
@@ -39,21 +37,22 @@ public class GameController {
 	}
 	
 	public void onOption() {
-		
+		mainView.switchScene(SceneSelection.OPTION_VIEW);
 	}
 	
 	public void onMenu() {
-		
+		mainView.switchScene(SceneSelection.MENU_VIEW);
 	}
 	
 	public void onQuit() {
-		
+		mainView.getStage().close();
 	}
 	
 	public void onApply(double difficulty, double sound) {
 		this.difficulty = difficulty;
 		this.sound = sound;
 		System.out.println(this.difficulty + " " + this.sound);
+		mainView.switchScene(SceneSelection.MENU_VIEW);
 	}
 	
 	public void createEnemy() {
