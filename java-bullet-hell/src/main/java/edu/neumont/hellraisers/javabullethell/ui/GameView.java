@@ -54,7 +54,7 @@ public class GameView{
 	}
 	
 	private void drawPlayer(Player player) {
-		Image temp = new Image("playerExample1.png");
+		Image temp = new Image("playerx32.png");
 		context.drawImage(temp,player.getLocation().getX(),player.getLocation().getY(),100,100);
 		player.move(1, 1);
 	}
@@ -63,10 +63,10 @@ public class GameView{
 		Image image;
 		switch(enemy.getEnemyType()) {
 		case BASIC:
-			image = new Image("EnemyExample1.png");
+			image = new Image("basicx32.png");
 			break;
 		case BIGBOI:
-			image = new Image("EnemyExample2.png");
+			image = new Image("bigboix32.png");
 			break;
 		default:
 			image = new Image("projectile.png");

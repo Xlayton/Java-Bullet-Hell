@@ -24,10 +24,7 @@ public class GameController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-<<<<<<< HEAD
 		mainView.switchScene(SceneSelection.GAME_VIEW);
-=======
->>>>>>> 4522d07a1797f07e96d6cdeed667b036202aed94
 	}
 	
 	public void init() {
