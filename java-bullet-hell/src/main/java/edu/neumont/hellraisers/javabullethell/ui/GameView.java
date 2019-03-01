@@ -106,9 +106,6 @@ public class GameView{
 		drawPlayer(board.getPlayer());
 		for (Enemy enemy : board.getEnemies()) {
 			drawEnemy(enemy);
-			if (enemy > 0) {
-				control.createProjectile(ProjectileType.ENEMY_PROJECTILE, enemy.getLocation().getX(), enemy.getLocation().getY(), , speedY);
-			}
 		}
 		Projectile[] temp = new Projectile[board.getProjectiles().size()];
 		temp = board.getProjectiles().toArray(temp);
