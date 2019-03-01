@@ -29,6 +29,7 @@ public class GameView{
 	private int moveX = 0;
 	private int moveY = 0;
 	private boolean[] keyPressed = {false,false,false,false};
+	private boolean[] attackPressed = {false,false,false,false};
 	
 	private final int speed = 10;
 	
@@ -64,7 +65,24 @@ public class GameView{
 				}
 			}
 			if (key.getCode().equals(KeyCode.UP)) {
-				control.createProjectile(ProjectileType.PLAYER_PROJECTILE, board.getPlayer().getLocation().getX(), board.getPlayer().getLocation().getY(), 0, -1);
+				if (!attackPressed[0]) {
+					attackPressed[0] = true;
+				}
+			}
+			if (key.getCode().equals(KeyCode.LEFT)) {
+				if (!attackPressed[1]) {
+					attackPressed[1] = true;
+				}
+			}
+			if (key.getCode().equals(KeyCode.DOWN)) {
+				if (!attackPressed[2]) {
+					attackPressed[2] = true;
+				}
+			}
+			if (key.getCode().equals(KeyCode.RIGHT)) {
+				if (!attackPressed[3]) {
+					attackPressed[3] = true;
+				}
 			}
 		});
 		
@@ -85,6 +103,27 @@ public class GameView{
 				keyPressed[3] = false;
 				moveX -= speed;
 			}
+			if (key.getCode().equals(KeyCode.UP)) {
+				if (attackPressed[0]) {
+					attackPressed[0] = false;
+				}
+			}
+			if (key.getCode().equals(KeyCode.LEFT)) {
+				if (attackPressed[1]) {
+					attackPressed[1] = false;
+				}
+			}
+			if (key.getCode().equals(KeyCode.DOWN)) {
+				if (attackPressed[2]) {
+					attackPressed[2] = false;
+				}
+			}
+			if (key.getCode().equals(KeyCode.RIGHT)) {
+				if (attackPressed[3]) {
+					attackPressed[3] = false;
+				}
+			}
+			
 		});
 		new AnimationTimer() {
 
@@ -101,8 +140,24 @@ public class GameView{
 		control.getBoard().getPlayer().move(moveX,moveY);
 	}
 	
+	private void arrowsPressed(Board board) {
+		if (attackPressed[0]) {
+			control.createProjectile(ProjectileType.PLAYER_PROJECTILE, board.getPlayer().getLocation().getX(), board.getPlayer().getLocation().getY(), 0, -1);
+		}
+		if (attackPressed[1]) {
+			control.createProjectile(ProjectileType.PLAYER_PROJECTILE, board.getPlayer().getLocation().getX(), board.getPlayer().getLocation().getY(), -1,0);
+		}
+		if (attackPressed[2]) {
+			control.createProjectile(ProjectileType.PLAYER_PROJECTILE, board.getPlayer().getLocation().getX(), board.getPlayer().getLocation().getY(), 0, 1);
+		}
+		if (attackPressed[3]) {
+			control.createProjectile(ProjectileType.PLAYER_PROJECTILE, board.getPlayer().getLocation().getX(), board.getPlayer().getLocation().getY(), 1,0);
+		}
+	}
+	
 	public void updateDisplay(Board board) {
 		movePlayer();
+		arrowsPressed(board);
 		drawPlayer(board.getPlayer());
 		for (Enemy enemy : board.getEnemies()) {
 			drawEnemy(enemy);
