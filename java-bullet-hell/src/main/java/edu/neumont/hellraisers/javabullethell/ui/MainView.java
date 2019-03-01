@@ -72,4 +72,8 @@ public class MainView {
 	public Stage getStage() {
 		return stage;
 	}
+	
+	public GameView getGameView() {
+		return gameView;
+	}
 }

@@ -29,7 +29,7 @@ public class GameController {
 		}
 	}
 	
-	public void init() {
+	public void init() throws InterruptedException {
 		mainView.getStage().show();
 		mainView.registerController(this);
 		mainView.switchScene(SceneSelection.MENU_VIEW);
@@ -37,40 +37,10 @@ public class GameController {
 		createEnemy();
 		createEnemy();
 		createEnemy();
+		Thread.sleep(500);
 		createEnemy();
+		Thread.sleep(500);
 		createEnemy();
-		createEnemy();
-		createEnemy();createEnemy();
-		createEnemy();
-		createEnemy();
-		createEnemy();
-		createEnemy();
-		createEnemy();
-		createEnemy();createEnemy();
-		createEnemy();
-		createEnemy();
-		createEnemy();
-		createEnemy();
-		createEnemy();
-		createEnemy();createEnemy();
-		createEnemy();
-		createEnemy();
-		createEnemy();
-		createEnemy();
-		createEnemy();
-		createEnemy();createEnemy();
-		createEnemy();
-		createEnemy();
-		createEnemy();
-		createEnemy();
-		createEnemy();
-		createEnemy();createEnemy();
-		createEnemy();
-		createEnemy();
-		createEnemy();
-		createEnemy();
-		createEnemy();
-		createEnemy();createEnemy();
 		//TODO Really plz dont
 	}
 	
