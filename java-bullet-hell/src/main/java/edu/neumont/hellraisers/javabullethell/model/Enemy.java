@@ -36,4 +36,8 @@ public class Enemy extends Entity{
 	public int getShots() {
 		return this.numShotsToShoot;
 	}	
+	
+	public void setShots(int toSet) {
+		this.numShotsToShoot = toSet;
+	}
 }

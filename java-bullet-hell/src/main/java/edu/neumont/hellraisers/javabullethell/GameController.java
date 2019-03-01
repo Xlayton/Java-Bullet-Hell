@@ -1,6 +1,7 @@
 package edu.neumont.hellraisers.javabullethell;
 
 import java.io.IOException;
+import java.util.Random;
 
 import edu.neumont.hellraisers.javabullethell.model.Board;
 import edu.neumont.hellraisers.javabullethell.model.Coordinate;
@@ -30,7 +31,45 @@ public class GameController {
 		mainView.getStage().show();
 		mainView.registerController(this);
 		mainView.switchScene(SceneSelection.MENU_VIEW);
+		//TODO DONT FORGET TO NOT NOT REMOVE THIS 
 		createEnemy();
+		createEnemy();
+		createEnemy();
+		createEnemy();
+		createEnemy();
+		createEnemy();
+		createEnemy();createEnemy();
+		createEnemy();
+		createEnemy();
+		createEnemy();
+		createEnemy();
+		createEnemy();
+		createEnemy();createEnemy();
+		createEnemy();
+		createEnemy();
+		createEnemy();
+		createEnemy();
+		createEnemy();
+		createEnemy();createEnemy();
+		createEnemy();
+		createEnemy();
+		createEnemy();
+		createEnemy();
+		createEnemy();
+		createEnemy();createEnemy();
+		createEnemy();
+		createEnemy();
+		createEnemy();
+		createEnemy();
+		createEnemy();
+		createEnemy();createEnemy();
+		createEnemy();
+		createEnemy();
+		createEnemy();
+		createEnemy();
+		createEnemy();
+		createEnemy();createEnemy();
+		//TODO Really plz dont
 	}
 	
 	public void onPlay() {
@@ -57,7 +96,7 @@ public class GameController {
 	}
 	
 	public void createEnemy() {
-		board.getEnemies().add(new Enemy(EnemyType.BIGBOI, new Coordinate(0,0), difficulty));
+		board.getEnemies().add(new Enemy(EnemyType.BIGBOI, new Coordinate(new Random().nextInt(801),new Random().nextInt(801)), difficulty));
 	}
 	
 	public void createPlayer() {
