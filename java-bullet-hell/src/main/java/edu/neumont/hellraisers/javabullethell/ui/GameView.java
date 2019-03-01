@@ -1,43 +1,46 @@
 package edu.neumont.hellraisers.javabullethell.ui;
 
+
+
+import java.io.File;
+
 import edu.neumont.hellraisers.javabullethell.GameController;
 import edu.neumont.hellraisers.javabullethell.model.Board;
 import edu.neumont.hellraisers.javabullethell.model.Enemy;
 import edu.neumont.hellraisers.javabullethell.model.Entity;
+import edu.neumont.hellraisers.javabullethell.model.FireEventListener;
 import edu.neumont.hellraisers.javabullethell.model.Player;
 import edu.neumont.hellraisers.javabullethell.model.Projectile;
 import edu.neumont.hellraisers.javabullethell.model.ProjectileType;
 import javafx.animation.AnimationTimer;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 
-public class GameView{
+public class GameView implements FireEventListener {
 	private Scene view;
 	private Group group;
 	private Canvas canvas;
 	private GraphicsContext context;
 	private GameController control;
-	
 	private int moveX = 0;
 	private int moveY = 0;
-	private boolean[] keyPressed = {false,false,false,false};
-	
+	private AudioClip sound = new AudioClip(new File("./src/main/resources/moistShot.mp3").toURI().toString());
+	private boolean[] keyPressed = { false, false, false, false };
 	private final int speed = 10;
-	
+
 	public void createCanvas(Board board) {
-		canvas = new Canvas(board.getWidth(),board.getHeight());
+		board.registerListener(this);
+		canvas = new Canvas(board.getWidth(), board.getHeight());
 		group = new Group(canvas);
 		context = canvas.getGraphicsContext2D();
-		view = new Scene(group,board.getWidth(),board.getHeight());
-		
+		view = new Scene(group, board.getWidth(), board.getHeight());
+
 		view.setOnKeyPressed(key -> {
 			if (key.getCode().equals(KeyCode.W)) {
 				if (!keyPressed[0]) {
@@ -64,11 +67,12 @@ public class GameView{
 				}
 			}
 			if (key.getCode().equals(KeyCode.UP)) {
-				control.createProjectile(ProjectileType.PLAYER_PROJECTILE, board.getPlayer().getLocation().getX(), board.getPlayer().getLocation().getY(), 0, -1);
+				control.createProjectile(ProjectileType.PLAYER_PROJECTILE, board.getPlayer().getLocation().getX(),
+						board.getPlayer().getLocation().getY(), 0, -1);
 			}
 		});
-		
-		view.setOnKeyReleased(key ->{
+
+		view.setOnKeyReleased(key -> {
 			if (key.getCode().equals(KeyCode.W)) {
 				keyPressed[0] = false;
 				moveY += speed;
@@ -93,14 +97,14 @@ public class GameView{
 				context.clearRect(0, 0, board.getWidth(), board.getHeight());
 				updateDisplay(board);
 			}
-			
+
 		}.start();
 	}
-	
+
 	private void movePlayer() {
-		control.getBoard().getPlayer().move(moveX,moveY);
+		control.getBoard().getPlayer().move(moveX, moveY);
 	}
-	
+
 	public void updateDisplay(Board board) {
 		movePlayer();
 		drawPlayer(board.getPlayer());
@@ -112,23 +116,23 @@ public class GameView{
 		drawProjectiles(temp);
 		drawScore(board.getPlayer());
 	}
-	
+
 	public void updateController(GameController control) {
 		this.control = control;
 	}
-	
+
 	public Scene getView() {
 		return view;
 	}
-	
+
 	private void drawPlayer(Player player) {
 		Image temp = new Image("playerx32.png");
-		context.drawImage(temp,player.getLocation().getX(),player.getLocation().getY(),64,64);
+		context.drawImage(temp, player.getLocation().getX(), player.getLocation().getY(), 64, 64);
 	}
-	
+
 	private void drawEnemy(Enemy enemy) {
 		Image image;
-		switch(enemy.getEnemyType()) {
+		switch (enemy.getEnemyType()) {
 		case BASIC:
 			image = new Image("basicx32.png");
 			break;
@@ -139,9 +143,10 @@ public class GameView{
 			image = new Image("projectile.png");
 			break;
 		}
-		context.drawImage(image,enemy.getLocation().getX(),enemy.getLocation().getY(), enemy.getWidth(), enemy.getHeight());
+		context.drawImage(image, enemy.getLocation().getX(), enemy.getLocation().getY(), enemy.getWidth(),
+				enemy.getHeight());
 	}
-	
+
 	private void drawProjectiles(Projectile[] projectiles) {
 		Image image = new Image("projectile.png");
 		for (Projectile p : projectiles) {
@@ -149,15 +154,19 @@ public class GameView{
 			context.drawImage(image, p.getLocation().getX(), p.getLocation().getY());
 		}
 	}
-	
+
 	private void drawScore(Player player) {
 		context.setLineWidth(1.0);
 		context.setFill(Color.BLUE);
-		context.fillText(String.valueOf(player.getScore()), 50,780);
+		context.fillText(String.valueOf(player.getScore()), 50, 780);
 	}
-	
+
 	private void drawHealth(Entity entity) {
-		
+
 	}
-	
+
+	@Override
+	public void projectileFired() {
+		sound.play();
+	}
 }
