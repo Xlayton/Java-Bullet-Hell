@@ -32,6 +32,7 @@ public class GameView{
 	private boolean[] attackPressed = {false,false,false,false};
 	
 	private final int speed = 10;
+	private final int playerBulletSpeed = 5;
 	
 	public void createCanvas(Board board) {
 		canvas = new Canvas(board.getWidth(),board.getHeight());
@@ -142,16 +143,16 @@ public class GameView{
 	
 	private void arrowsPressed(Board board) {
 		if (attackPressed[0]) {
-			control.createProjectile(ProjectileType.PLAYER_PROJECTILE, board.getPlayer().getLocation().getX(), board.getPlayer().getLocation().getY(), 0, -1);
+			control.createProjectile(ProjectileType.PLAYER_PROJECTILE, board.getPlayer().getLocation().getX(), board.getPlayer().getLocation().getY(), 0, -playerBulletSpeed);
 		}
 		if (attackPressed[1]) {
-			control.createProjectile(ProjectileType.PLAYER_PROJECTILE, board.getPlayer().getLocation().getX(), board.getPlayer().getLocation().getY(), -1,0);
+			control.createProjectile(ProjectileType.PLAYER_PROJECTILE, board.getPlayer().getLocation().getX(), board.getPlayer().getLocation().getY(), -playerBulletSpeed,0);
 		}
 		if (attackPressed[2]) {
-			control.createProjectile(ProjectileType.PLAYER_PROJECTILE, board.getPlayer().getLocation().getX(), board.getPlayer().getLocation().getY(), 0, 1);
+			control.createProjectile(ProjectileType.PLAYER_PROJECTILE, board.getPlayer().getLocation().getX(), board.getPlayer().getLocation().getY(), 0, playerBulletSpeed);
 		}
 		if (attackPressed[3]) {
-			control.createProjectile(ProjectileType.PLAYER_PROJECTILE, board.getPlayer().getLocation().getX(), board.getPlayer().getLocation().getY(), 1,0);
+			control.createProjectile(ProjectileType.PLAYER_PROJECTILE, board.getPlayer().getLocation().getX(), board.getPlayer().getLocation().getY(), playerBulletSpeed,0);
 		}
 	}
 	
@@ -198,6 +199,7 @@ public class GameView{
 	}
 	
 	private void drawProjectiles(Projectile[] projectiles) {
+		int[] positionsToRemove = new int[projectiles.length];
 		Image image = new Image("projectile.png");
 		for (Projectile p : projectiles) {
 			p.move();
