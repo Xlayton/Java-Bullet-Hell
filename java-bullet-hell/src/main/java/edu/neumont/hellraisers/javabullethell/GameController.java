@@ -30,6 +30,7 @@ public class GameController {
 		mainView.getStage().show();
 		mainView.registerController(this);
 		mainView.switchScene(SceneSelection.MENU_VIEW);
+		createEnemy();
 	}
 	
 	public void onPlay() {
@@ -56,7 +57,7 @@ public class GameController {
 	}
 	
 	public void createEnemy() {
-		board.getEnemies().add(new Enemy(EnemyType.BIGBOI, new Coordinate(0,0)));
+		board.getEnemies().add(new Enemy(EnemyType.BIGBOI, new Coordinate(0,0), difficulty));
 	}
 	
 	public void createPlayer() {

@@ -8,6 +8,15 @@ public class Projectile {
 	private ProjectileType projectileType;
 	private int damage;
 	
+	public Projectile(Coordinate location, ProjectileType projectileType, int velocityX, int velocityY) {
+		this.location = location;
+		this.projectileType = projectileType;
+		this.timeOut = projectileType.getTimeout();
+		this.damage = projectileType.getDamage();
+		this.velocityX = velocityX;
+		this.velocityY = velocityY;
+	}
+	
 	public void move() {
 		this.location.addX(velocityX);
 		this.location.addY(velocityY);
