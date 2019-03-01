@@ -6,6 +6,8 @@ import edu.neumont.hellraisers.javabullethell.model.Board;
 import edu.neumont.hellraisers.javabullethell.model.Coordinate;
 import edu.neumont.hellraisers.javabullethell.model.Enemy;
 import edu.neumont.hellraisers.javabullethell.model.EnemyType;
+import edu.neumont.hellraisers.javabullethell.model.Projectile;
+import edu.neumont.hellraisers.javabullethell.model.ProjectileType;
 import edu.neumont.hellraisers.javabullethell.model.SceneSelection;
 import edu.neumont.hellraisers.javabullethell.ui.MainView;
 
@@ -81,5 +83,9 @@ public class GameController {
 	
 	public double getSound(){
 		return sound;
+	}
+	
+	public void createProjectile(ProjectileType type, int positionX, int positionY, int speedX, int speedY) {
+		board.getProjectiles().add(new Projectile(new Coordinate(positionX,positionY),type,speedX,speedY));
 	}
 }

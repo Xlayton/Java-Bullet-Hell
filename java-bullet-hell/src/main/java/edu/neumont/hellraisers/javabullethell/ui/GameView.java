@@ -6,6 +6,7 @@ import edu.neumont.hellraisers.javabullethell.model.Enemy;
 import edu.neumont.hellraisers.javabullethell.model.Entity;
 import edu.neumont.hellraisers.javabullethell.model.Player;
 import edu.neumont.hellraisers.javabullethell.model.Projectile;
+import edu.neumont.hellraisers.javabullethell.model.ProjectileType;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -36,14 +37,6 @@ public class GameView{
 		group = new Group(canvas);
 		context = canvas.getGraphicsContext2D();
 		view = new Scene(group,board.getWidth(),board.getHeight());
-		context.getCanvas().setOnMouseMoved(new EventHandler<MouseEvent>(){
-
-			@Override
-			public void handle(MouseEvent event) {
-				System.out.println(":O");
-			}
-			
-		});
 		
 		view.setOnKeyPressed(key -> {
 			if (key.getCode().equals(KeyCode.W)) {
@@ -69,6 +62,9 @@ public class GameView{
 					keyPressed[3] = true;
 					moveX += speed;
 				}
+			}
+			if (key.getCode().equals(KeyCode.UP)) {
+				control.createProjectile(ProjectileType.PLAYER_PROJECTILE, board.getPlayer().getLocation().getX(), board.getPlayer().getLocation().getY(), 0, -1);
 			}
 		});
 		
@@ -110,7 +106,13 @@ public class GameView{
 		drawPlayer(board.getPlayer());
 		for (Enemy enemy : board.getEnemies()) {
 			drawEnemy(enemy);
+			if (enemy > 0) {
+				control.createProjectile(ProjectileType.ENEMY_PROJECTILE, enemy.getLocation().getX(), enemy.getLocation().getY(), , speedY);
+			}
 		}
+		Projectile[] temp = new Projectile[board.getProjectiles().size()];
+		temp = board.getProjectiles().toArray(temp);
+		drawProjectiles(temp);
 		drawScore(board.getPlayer());
 	}
 	
@@ -146,6 +148,7 @@ public class GameView{
 	private void drawProjectiles(Projectile[] projectiles) {
 		Image image = new Image("projectile.png");
 		for (Projectile p : projectiles) {
+			p.move();
 			context.drawImage(image, p.getLocation().getX(), p.getLocation().getY());
 		}
 	}
