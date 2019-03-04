@@ -20,7 +20,7 @@ public class Player extends Entity {
 	@Override
 	public void onDeath() {
 		this.commitDie();
-		// TODO
+		// TODO Animate
 	}
 	
 	public long getScore() {
