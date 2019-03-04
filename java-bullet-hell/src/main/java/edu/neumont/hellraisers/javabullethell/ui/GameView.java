@@ -21,6 +21,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
 public class GameView implements FireEventListener {
 	private Scene view;
@@ -33,6 +34,8 @@ public class GameView implements FireEventListener {
 	private AudioClip sound = new AudioClip(new File("./src/main/resources/moistShot.mp3").toURI().toString());
 	private boolean[] keyPressed = {false,false,false,false};
 	private boolean[] attackPressed = {false,false,false,false};
+	private int attackCooldown = 0;
+	private boolean attacking = false;
 	
 	private final int speed = 10;
 	private final int playerBulletSpeed = 5;
@@ -69,25 +72,26 @@ public class GameView implements FireEventListener {
 					moveX += speed;
 				}
 			}
-			if (key.getCode().equals(KeyCode.UP)) {
-				control.createProjectile(ProjectileType.PLAYER_PROJECTILE, board.getPlayer().getLocation().getX(),
-						board.getPlayer().getLocation().getY(), 0, -1);
-
+			if (key.getCode().equals(KeyCode.UP) && !attacking) {
 				if (!attackPressed[0]) {
+					attacking = true;
 					attackPressed[0] = true;
 				}
 			}
-			if (key.getCode().equals(KeyCode.LEFT)) {
+			if (key.getCode().equals(KeyCode.LEFT) && !attacking) {
+				attacking = true;
 				if (!attackPressed[1]) {
 					attackPressed[1] = true;
 				}
 			}
-			if (key.getCode().equals(KeyCode.DOWN)) {
+			if (key.getCode().equals(KeyCode.DOWN) && !attacking) {
+				attacking = true;
 				if (!attackPressed[2]) {
 					attackPressed[2] = true;
 				}
 			}
-			if (key.getCode().equals(KeyCode.RIGHT)) {
+			if (key.getCode().equals(KeyCode.RIGHT) && !attacking) {
+				attacking = true;
 				if (!attackPressed[3]) {
 					attackPressed[3] = true;
 				}
@@ -112,23 +116,27 @@ public class GameView implements FireEventListener {
 				moveX -= speed;
 			}
 			if (key.getCode().equals(KeyCode.UP)) {
-				if (attackPressed[0]) {
+				if (attackPressed[0] && attacking) {
 					attackPressed[0] = false;
+					attacking = false;
 				}
 			}
 			if (key.getCode().equals(KeyCode.LEFT)) {
-				if (attackPressed[1]) {
+				if (attackPressed[1] && attacking) {
 					attackPressed[1] = false;
+					attacking = false;
 				}
 			}
-			if (key.getCode().equals(KeyCode.DOWN)) {
+			if (key.getCode().equals(KeyCode.DOWN) && attacking) {
 				if (attackPressed[2]) {
 					attackPressed[2] = false;
+					attacking = false;
 				}
 			}
-			if (key.getCode().equals(KeyCode.RIGHT)) {
+			if (key.getCode().equals(KeyCode.RIGHT) && attacking) {
 				if (attackPressed[3]) {
 					attackPressed[3] = false;
+					attacking = false;
 				}
 			}
 			
@@ -146,23 +154,41 @@ public class GameView implements FireEventListener {
 
 	private void movePlayer() {
 		control.getBoard().getPlayer().move(moveX, moveY);
+		int x = control.getBoard().getPlayer().getLocation().getX() + 40;
+		int y = control.getBoard().getPlayer().getLocation().getY() + 40;
+		if (x+1 > control.getBoard().getWidth()) {
+			control.getBoard().getPlayer().move(-1*moveX, 0);
+		}else if(x-20 < 0) {
+			control.getBoard().getPlayer().move(-1*moveX, 0);
+		}
+		if(y-30 < 0) {
+			control.getBoard().getPlayer().move(0, -1*moveY);
+		}else if(y+20 > control.getBoard().getHeight()) {
+			control.getBoard().getPlayer().move(0, -1*moveY);
+		}
 	}
 	private void arrowsPressed(Board board) {
+		int offsetX = 20;
+		int offsetY = 20;
+		if (attackCooldown > 10) {
+			attackCooldown = 0;
 		if (attackPressed[0]) {
-			control.createProjectile(ProjectileType.PLAYER_PROJECTILE, board.getPlayer().getLocation().getX(), board.getPlayer().getLocation().getY(), 0, -playerBulletSpeed);
+			control.createProjectile(ProjectileType.PLAYER_PROJECTILE, board.getPlayer().getLocation().getX() + offsetX, board.getPlayer().getLocation().getY() + offsetY, 0, -playerBulletSpeed);
 		}
 		if (attackPressed[1]) {
-			control.createProjectile(ProjectileType.PLAYER_PROJECTILE, board.getPlayer().getLocation().getX(), board.getPlayer().getLocation().getY(), -playerBulletSpeed,0);
+			control.createProjectile(ProjectileType.PLAYER_PROJECTILE, board.getPlayer().getLocation().getX() + offsetX, board.getPlayer().getLocation().getY() + offsetY, -playerBulletSpeed,0);
 		}
 		if (attackPressed[2]) {
-			control.createProjectile(ProjectileType.PLAYER_PROJECTILE, board.getPlayer().getLocation().getX(), board.getPlayer().getLocation().getY(), 0, playerBulletSpeed);
+			control.createProjectile(ProjectileType.PLAYER_PROJECTILE, board.getPlayer().getLocation().getX() + offsetX, board.getPlayer().getLocation().getY() + offsetY, 0, playerBulletSpeed);
 		}
 		if (attackPressed[3]) {
-			control.createProjectile(ProjectileType.PLAYER_PROJECTILE, board.getPlayer().getLocation().getX(), board.getPlayer().getLocation().getY(), playerBulletSpeed,0);
+			control.createProjectile(ProjectileType.PLAYER_PROJECTILE, board.getPlayer().getLocation().getX() + offsetX, board.getPlayer().getLocation().getY() + offsetY, playerBulletSpeed,0);
+		}
 		}
 	}
 
 	public void updateDisplay(Board board) {
+		attackCooldown++;
 		movePlayer();
 		arrowsPressed(board);
 		drawPlayer(board.getPlayer());
@@ -186,6 +212,7 @@ public class GameView implements FireEventListener {
 	private void drawPlayer(Player player) {
 		Image temp = new Image("playerx32.png");
 		context.drawImage(temp, player.getLocation().getX(), player.getLocation().getY(), 64, 64);
+		drawHealth(player);
 	}
 
 	private void drawEnemy(Enemy enemy) {
@@ -201,17 +228,46 @@ public class GameView implements FireEventListener {
 			image = new Image("projectile.png");
 			break;
 		}
+		drawHealth(enemy);
 		context.drawImage(image, enemy.getLocation().getX(), enemy.getLocation().getY(), enemy.getWidth(),
 				enemy.getHeight());
 	}
 
 	private void drawProjectiles(Projectile[] projectiles) {
-		int[] positionsToRemove = new int[projectiles.length];
 		Image image = new Image("projectile.png");
-		for (Projectile p : projectiles) {
+		for (int index = 0; index < projectiles.length; index++) {
+			Projectile p = projectiles[index];
 			p.move();
 			context.drawImage(image, p.getLocation().getX(), p.getLocation().getY());
+			if (projectileCollision(p)) {
+				control.destroyProjectile(p);
+			}
 		}
+	}
+	
+	private boolean projectileCollision(Projectile p) {
+		if (p.getProjectileType() == ProjectileType.PLAYER_PROJECTILE) {
+			for (Enemy enemy : control.getBoard().getEnemies()) {
+				int x = enemy.getLocation().getX() + enemy.getWidth()/2;
+				int y = enemy.getLocation().getY() + enemy.getHeight()/2;
+				int pX = p.getLocation().getX();
+				int pY = p.getLocation().getY();
+				if (pX > x-enemy.getWidth()/2) {
+					if (pX < x+enemy.getWidth()/2) {
+						if (pY > y-enemy.getHeight()/2) {
+							if (pY < y+enemy.getHeight()/2) {
+								enemy.takeDamage(100);
+								System.out.println(enemy.getHealth());
+								return true;
+							}
+						}
+					}
+				}
+			}
+		}else {
+			
+		}
+		return false;
 	}
 
 	private void drawScore(Player player) {
@@ -221,7 +277,9 @@ public class GameView implements FireEventListener {
 	}
 
 	private void drawHealth(Entity entity) {
-
+		context.strokeRect(entity.getLocation().getX()-15,entity.getLocation().getY()-5,30,10);
+		context.setFill(Color.FIREBRICK);
+		context.fillRect(entity.getLocation().getX()-14,entity.getLocation().getY()-4,28*(entity.getHealth()/(entity.getMaxHealth()*1D)),8);
 	}
 
 	@Override

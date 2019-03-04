@@ -59,6 +59,14 @@ public class GameController {
 		mainView.switchScene(SceneSelection.MENU_VIEW);
 	}
 	
+	public void destroyProjectile(Projectile p) {
+		for (int i = 0; i < board.getProjectiles().size(); i++) {
+			if (p == board.getProjectiles().get(i)) {
+				board.getProjectiles().remove(i);
+			}
+		}
+	}
+	
 	public void createEnemy() {
 		switch(new Random().nextInt(4) + 1) {
 		case 1:

@@ -2,12 +2,14 @@ package edu.neumont.hellraisers.javabullethell.model;
 
 public abstract class Entity {
 	private int health;
+	private final int maxHealth;
 	private Coordinate location;
 	private int width;
 	private int height;
 	private boolean isDead;
 	
 	public Entity(int health, int width, int height, Coordinate location) {
+		maxHealth = health;
 		this.location = location;
 		this.width = width;
 		this.height = height;
@@ -15,7 +17,7 @@ public abstract class Entity {
 	}
 	
 	public void takeDamage(int amt) {
-		this.health -= amt;
+		health -= amt;
 	}
 	
 	public void move(int amtX, int amtY) {
@@ -27,6 +29,10 @@ public abstract class Entity {
 	
 	public int getHealth() {
 		return health;
+	}
+	
+	public int getMaxHealth() {
+		return maxHealth;
 	}
 	
 	public Coordinate getLocation() {
