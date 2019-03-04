@@ -21,7 +21,6 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 
 public class GameView implements FireEventListener {
 	private Scene view;
@@ -147,6 +146,7 @@ public class GameView implements FireEventListener {
 			public void handle(long arg0) {
 				context.clearRect(0, 0, board.getWidth(), board.getHeight());
 				updateDisplay(board);
+				
 			}
 
 		}.start();
