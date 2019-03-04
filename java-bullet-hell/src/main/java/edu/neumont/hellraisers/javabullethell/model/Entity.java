@@ -15,10 +15,6 @@ public abstract class Entity {
 		this.height = height;
 		this.health = health;
 	}
-
-	public void shoot(Direction direction) {
-		//TODO
-	}
 	
 	public void takeDamage(int amt) {
 		health -= amt;

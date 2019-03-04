@@ -33,15 +33,7 @@ public class GameController {
 		mainView.getStage().show();
 		mainView.registerController(this);
 		mainView.switchScene(SceneSelection.MENU_VIEW);
-		//TODO DONT FORGET TO NOT NOT REMOVE THIS 
-		createEnemy();
-		createEnemy();
-		createEnemy();
-		Thread.sleep(500);
-		createEnemy();
-		Thread.sleep(500);
-		createEnemy();
-		//TODO Really plz dont
+		createWave();
 	}
 	
 	public void onPlay() {
@@ -76,7 +68,27 @@ public class GameController {
 	}
 	
 	public void createEnemy() {
-		board.getEnemies().add(new Enemy(EnemyType.BIGBOI, new Coordinate(new Random().nextInt(801),new Random().nextInt(801)), difficulty));
+		switch(new Random().nextInt(4) + 1) {
+		case 1:
+			board.getEnemies().add(new Enemy(EnemyType.BIGBOI, new Coordinate(new Random().nextInt(801),board.getHeight()), difficulty));
+			break;
+		case 2:
+			board.getEnemies().add(new Enemy(EnemyType.BIGBOI, new Coordinate(board.getWidth(),new Random().nextInt(801)), difficulty));
+			break;
+		case 3:
+			board.getEnemies().add(new Enemy(EnemyType.BIGBOI, new Coordinate(new Random().nextInt(801),-45), difficulty));
+			break;
+		case 4:
+			board.getEnemies().add(new Enemy(EnemyType.BIGBOI, new Coordinate(-45,new Random().nextInt(801)), difficulty));
+			break;
+		}
+	}
+	
+	public void createWave() {
+		int waveSize = (int)difficulty * 10;
+		for(int i = 0; i < waveSize; i++) {
+			createEnemy();
+		}
 	}
 	
 	public void createPlayer() {
