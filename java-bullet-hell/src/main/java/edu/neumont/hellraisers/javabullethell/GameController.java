@@ -33,11 +33,11 @@ public class GameController {
 		mainView.getStage().show();
 		mainView.registerController(this);
 		mainView.switchScene(SceneSelection.MENU_VIEW);
-		createWave();
 	}
 	
 	public void onPlay() {
 		mainView.switchScene(SceneSelection.GAME_VIEW);
+		createWave();
 	}
 	
 	public void onOption() {
