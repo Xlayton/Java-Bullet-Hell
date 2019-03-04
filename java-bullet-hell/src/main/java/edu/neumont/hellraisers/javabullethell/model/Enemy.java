@@ -25,7 +25,7 @@ public class Enemy extends Entity{
 	@Override
 	public void onDeath() {
 		this.commitDie();
-		// TODO
+		// TODO Animate
 	}
 	
 	public EnemyType getEnemyType() {

@@ -41,6 +41,27 @@ public class GameController {
 		createEnemy();
 		Thread.sleep(500);
 		createEnemy();
+		createEnemy();
+		createEnemy();
+		createEnemy();
+		Thread.sleep(500);
+		createEnemy();
+		Thread.sleep(500);
+		createEnemy();
+		createEnemy();
+		createEnemy();
+		createEnemy();
+		Thread.sleep(500);
+		createEnemy();
+		Thread.sleep(500);
+		createEnemy();
+		createEnemy();
+		createEnemy();
+		createEnemy();
+		Thread.sleep(500);
+		createEnemy();
+		Thread.sleep(500);
+		createEnemy();
 		//TODO Really plz dont
 	}
 	
