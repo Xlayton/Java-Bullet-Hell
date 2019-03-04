@@ -95,8 +95,13 @@ public class GameController {
 		
 	}
 	
-	public void removeEnemy() {
-		
+	public void removeEnemy(Enemy enemy) {
+		for (int i = 0; i < board.getEnemies().size(); i++) {
+			if (enemy == board.getEnemies().get(i)) {
+				enemy.onDeath();
+				board.getEnemies().remove(i);
+			}
+		}
 	}
 	
 	public void removePlayer() {

@@ -256,8 +256,11 @@ public class GameView implements FireEventListener {
 					if (pX < x+enemy.getWidth()/2) {
 						if (pY > y-enemy.getHeight()/2) {
 							if (pY < y+enemy.getHeight()/2) {
-								enemy.takeDamage(100);
-								System.out.println(enemy.getHealth());
+								enemy.takeDamage(500);
+								if (enemy.getHealth() <= 0) {
+									control.removeEnemy(enemy);
+									control.getBoard().getPlayer().addScore(100L);
+								}
 								return true;
 							}
 						}

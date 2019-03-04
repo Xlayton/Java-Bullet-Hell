@@ -26,4 +26,8 @@ public class Player extends Entity {
 	public long getScore() {
 		return score;
 	}
+	
+	public void addScore(long points) {
+		score += points;
+	}
 }
