@@ -336,6 +336,8 @@ public class GameView implements FireEventListener {
 
 	@Override
 	public void projectileFired() {
-		sound.play();
+		if (!control.getBoard().getPlayer().isDead()){
+			sound.play();
+		}
 	}
 }
