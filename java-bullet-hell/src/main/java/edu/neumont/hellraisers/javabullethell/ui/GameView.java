@@ -144,7 +144,6 @@ public class GameView implements FireEventListener {
 			public void handle(long arg0) {
 				context.clearRect(0, 0, board.getWidth(), board.getHeight());
 				updateDisplay(board);
-
 			}
 
 		}.start();

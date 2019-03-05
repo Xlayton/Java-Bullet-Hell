@@ -11,18 +11,12 @@ import edu.neumont.hellraisers.javabullethell.model.Projectile;
 import edu.neumont.hellraisers.javabullethell.model.ProjectileType;
 import edu.neumont.hellraisers.javabullethell.model.SceneSelection;
 import edu.neumont.hellraisers.javabullethell.ui.MainView;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.util.Duration;
 
 public class GameController {
 	private Board board;
 	private MainView mainView;
 	private double difficulty = 2.0;
 	private double sound = 75.0;
-	private Thread spawnThread;
-	private Timeline spawnTimer;
 
 	public GameController(MainView view) {
 		this.mainView = view;
@@ -33,12 +27,6 @@ public class GameController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		this.spawnThread = new Thread();
-		this.spawnTimer = new Timeline(new KeyFrame(Duration.millis(15000/difficulty), e -> {
-			this.createWave();
-		}));
-		spawnTimer.setCycleCount(Animation.INDEFINITE);
 	}
 
 	public void init() throws InterruptedException {
@@ -49,7 +37,7 @@ public class GameController {
 
 	public void onPlay() {
 		mainView.switchScene(SceneSelection.GAME_VIEW);
-		spawnTimer.play();
+		startSpawn();
 	}
 
 	public void onOption() {
@@ -83,45 +71,43 @@ public class GameController {
 		switch (new Random().nextInt(4) + 1) {
 		case 1:
 			board.getEnemies().add(new Enemy(EnemyType.BASIC,
-					new Coordinate(new Random().nextInt(801), board.getHeight()), difficulty));
+					new Coordinate(new Random().nextInt(board.getWidth() + 1), board.getHeight()), difficulty));
 			break;
 		case 2:
 			board.getEnemies().add(new Enemy(EnemyType.BASIC,
-					new Coordinate(board.getWidth(), new Random().nextInt(801)), difficulty));
+					new Coordinate(board.getWidth(), new Random().nextInt(board.getHeight() + 1)), difficulty));
 			break;
 		case 3:
 			board.getEnemies()
-					.add(new Enemy(EnemyType.BIGBOI, new Coordinate(new Random().nextInt(801), -45), difficulty));
+					.add(new Enemy(EnemyType.BIGBOI, new Coordinate(new Random().nextInt(board.getWidth()  + 1), -45), difficulty));
 			break;
 		case 4:
 			board.getEnemies()
-					.add(new Enemy(EnemyType.BIGBOI, new Coordinate(-45, new Random().nextInt(801)), difficulty));
+					.add(new Enemy(EnemyType.BIGBOI, new Coordinate(-45, new Random().nextInt(board.getHeight() + 1)), difficulty));
 			break;
 		}
 	}
 
-	public void createWave() {
-		int waveSize = (int) difficulty * 5 + 5;
-		int currentEne = board.getEnemies().size();
-		while (board.getEnemies().size() < waveSize + currentEne) {
-			synchronized (spawnThread) {
-				for (int i = 0; i < waveSize; i++) {
-					createEnemy();
-//					try {
-//						spawnThread.wait(75);
-//					} catch (InterruptedException e) {
-//						e.printStackTrace();
-//					}
-				}
-			}
-		}
-
+	public void startSpawn() {
+		Thread enemySpawner = new Thread(new Runnable() {
+		    public void run() {
+		        while(!board.getPlayer().isDead()) { // Just changed it to a while loop
+		            createEnemy();
+		            try {
+		                Thread.sleep(500);
+		            } catch (InterruptedException e) {
+		                e.printStackTrace();
+		            }
+		        }
+		    }
+		});
+		enemySpawner.start();
 	}
 
 	public void createPlayer() {
 
 	}
-	
+
 	public void removeEnemy(Enemy enemy) {
 		for (int i = 0; i < board.getEnemies().size(); i++) {
 			if (enemy == board.getEnemies().get(i)) {
