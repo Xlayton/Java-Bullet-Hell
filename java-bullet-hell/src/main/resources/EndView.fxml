@@ -12,8 +12,8 @@
 			<Label styleClass="endLabel">GAME OVER!</Label>
 			<Label styleClass="endLabel" fx:id="playerScore">Score: 0</Label>
 			<VBox alignment="center">
-				<Button styleClass="btn" onAction="#onQuit">Quit</Button>
 				<Button styleClass="btn" onAction="#onMenu">Main Menu</Button>
+				<Button styleClass="btn" onAction="#onQuit">Quit</Button>
 			</VBox>
 		</VBox>
 	</center>

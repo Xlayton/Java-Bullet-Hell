@@ -40,6 +40,11 @@ public class MainView {
 		this.gameView = gameLoad.getController();
 		this.gameView.updateController(control);
 		this.gameView.createCanvas(board);
+		this.stage.setFullScreen(true);
+		this.stage.setTitle("Java Bullet Hell");
+		this.stage.setResizable(false);
+		this.stage.setY(0);
+		this.stage.setX(0);
 	}
 	
 	public void switchScene(SceneSelection selection){
