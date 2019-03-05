@@ -91,7 +91,7 @@ public class GameController {
 	public void startSpawn() {
 		Thread enemySpawner = new Thread(new Runnable() {
 		    public void run() {
-		        while(!board.getPlayer().isDead()) { // Just changed it to a while loop
+		        while(!board.getPlayer().isDead()) {
 		            createEnemy();
 		            try {
 		                Thread.sleep(500);
