@@ -71,11 +71,11 @@ public class GameController {
 	public void createEnemy() {
 		switch (new Random().nextInt(4) + 1) {
 		case 1:
-			board.getEnemies().add(new Enemy(EnemyType.BIGBOI,
+			board.getEnemies().add(new Enemy(EnemyType.BASIC,
 					new Coordinate(new Random().nextInt(801), board.getHeight()), difficulty));
 			break;
 		case 2:
-			board.getEnemies().add(new Enemy(EnemyType.BIGBOI,
+			board.getEnemies().add(new Enemy(EnemyType.BASIC,
 					new Coordinate(board.getWidth(), new Random().nextInt(801)), difficulty));
 			break;
 		case 3:
