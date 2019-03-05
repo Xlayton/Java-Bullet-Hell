@@ -317,6 +317,7 @@ public class GameView implements FireEventListener {
 							player.takeDamage(p.getDamage());
 							control.destroyProjectile(p);
 							if (player.getHealth() <= 0) {
+								jukebox.stop();
 								player.onDeath();
 								control.removePlayer();
 							}
