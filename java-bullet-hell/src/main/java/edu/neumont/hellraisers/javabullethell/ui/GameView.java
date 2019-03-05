@@ -33,6 +33,7 @@ public class GameView implements FireEventListener {
 	private boolean[] attackPressed = { false, false, false, false };
 	private int attackCooldown = 0;
 	private boolean attacking = false;
+	private String playerImage = "playerx32.png";
 
 	private final int speed = 10;
 	private final int playerBulletSpeed = 5;
@@ -47,6 +48,7 @@ public class GameView implements FireEventListener {
 		view.setOnKeyPressed(key -> {
 			if (key.getCode().equals(KeyCode.W)) {
 				if (!keyPressed[0]) {
+					playerImage = "playerx32-back.png";
 					keyPressed[0] = true;
 					moveY -= speed;
 				}
@@ -168,7 +170,7 @@ public class GameView implements FireEventListener {
 	private void arrowsPressed(Board board) {
 		int offsetX = 20;
 		int offsetY = 20;
-		if (attackCooldown > 10) {
+		if (attackCooldown > 5) {
 			attackCooldown = 0;
 			if (attackPressed[0]) {
 				control.createProjectile(ProjectileType.PLAYER_PROJECTILE,
@@ -216,7 +218,7 @@ public class GameView implements FireEventListener {
 	}
 
 	private void drawPlayer(Player player) {
-		Image temp = new Image("playerx32.png");
+		Image temp = new Image(playerImage);
 		context.drawImage(temp, player.getLocation().getX(), player.getLocation().getY(), 64, 64);
 		drawHealth(player);
 	}
@@ -257,17 +259,17 @@ public class GameView implements FireEventListener {
 	}
 
 	private boolean projectileCollision(Projectile p) {
+		int pX = p.getLocation().getX()+2;
+		int pY = p.getLocation().getY()+2;
 		if (p.getProjectileType() == ProjectileType.PLAYER_PROJECTILE) {
 			for (Enemy enemy : control.getBoard().getEnemies()) {
 				int x = enemy.getLocation().getX() + enemy.getWidth() / 2;
 				int y = enemy.getLocation().getY() + enemy.getHeight() / 2;
-				int pX = p.getLocation().getX();
-				int pY = p.getLocation().getY();
 				if (pX > x - enemy.getWidth() / 2) {
 					if (pX < x + enemy.getWidth() / 2) {
 						if (pY > y - enemy.getHeight() / 2) {
 							if (pY < y + enemy.getHeight() / 2) {
-								enemy.takeDamage(500);
+								enemy.takeDamage(p.getDamage());
 								if (enemy.getHealth() <= 0) {
 									control.removeEnemy(enemy);
 									control.getBoard().getPlayer().addScore(100L);
@@ -279,7 +281,24 @@ public class GameView implements FireEventListener {
 				}
 			}
 		} else {
-
+			int x = control.getBoard().getPlayer().getLocation().getX();
+			int y = control.getBoard().getPlayer().getLocation().getY();
+			Player player = control.getBoard().getPlayer();
+			x+=player.getWidth();
+			y+=player.getHeight();
+			if (pX > x - player.getWidth() + 5) {
+				if (pX < x + player.getWidth()-5) {
+					if (pY > y - player.getHeight()+5) {
+						if (pY < y + player.getHeight()-5){
+							player.takeDamage(p.getDamage());
+							control.destroyProjectile(p);
+							if (player.getHealth() <= 0) {
+								player.onDeath();
+							}
+						}
+					}
+				}
+			}
 		}
 		return false;
 	}
@@ -287,7 +306,7 @@ public class GameView implements FireEventListener {
 	private void drawScore(Player player) {
 		context.setLineWidth(1.0);
 		context.setFill(Color.BLUE);
-		context.fillText(String.valueOf(player.getScore()), 50, 780);
+		context.fillText(String.valueOf(player.getScore()), 50, 1000);
 	}
 
 	private void drawHealth(Entity entity) {

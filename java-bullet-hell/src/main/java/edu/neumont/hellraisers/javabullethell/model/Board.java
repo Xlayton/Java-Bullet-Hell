@@ -9,8 +9,8 @@ import javafx.animation.Timeline;
 import javafx.util.Duration;
 
 public class Board {
-	private static final int BOARD_WIDTH = 800;
-	private static final int BOARD_HEIGHT = 800;
+	private static final int BOARD_WIDTH = 1920;
+	private static final int BOARD_HEIGHT = 1080;
 
 	private FireEventListener gameView;
 	private Player player;
