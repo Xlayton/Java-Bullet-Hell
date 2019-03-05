@@ -39,7 +39,6 @@ public class MainView {
 		gameLoad.load();
 		this.gameView = gameLoad.getController();
 		this.gameView.updateController(control);
-		this.gameView.createCanvas(board);
 		this.stage.setFullScreen(true);
 		this.stage.setTitle("Java Bullet Hell");
 		this.stage.setResizable(false);
