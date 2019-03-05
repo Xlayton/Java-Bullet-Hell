@@ -21,6 +21,7 @@ import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 
 public class GameView implements FireEventListener {
+	private AnimationTimer anim;
 	private Scene view;
 	private Group group;
 	private Canvas canvas;
@@ -29,11 +30,11 @@ public class GameView implements FireEventListener {
 	private int moveX = 0;
 	private int moveY = 0;
 	private AudioClip sound = new AudioClip(new File("./src/main/resources/moistShot.mp3").toURI().toString());
-	private boolean[] keyPressed = { false, false, false, false };
-	private boolean[] attackPressed = { false, false, false, false };
-	private int attackCooldown = 0;
-	private boolean attacking = false;
-	private String playerImage = "playerx32.png";
+	private boolean[] keyPressed;
+	private boolean[] attackPressed;
+	private int attackCooldown;
+	private boolean attacking;
+	private String playerImage;
 
 	private final int speed = 10;
 	private final int playerBulletSpeed = 5;
@@ -44,6 +45,14 @@ public class GameView implements FireEventListener {
 		group = new Group(canvas);
 		context = canvas.getGraphicsContext2D();
 		view = new Scene(group, board.getWidth(), board.getHeight());
+		moveX = 0;
+		moveY = 0;
+		keyPressed = new boolean[] {false,false,false,false};
+		attackPressed = new boolean[] {false,false,false,false};
+		attackCooldown = 0;
+		attacking = false;
+		playerImage = "playerx32.png";
+		anim = null;
 
 		view.setOnKeyPressed(key -> {
 			if (key.getCode().equals(KeyCode.W)) {
@@ -55,18 +64,21 @@ public class GameView implements FireEventListener {
 			}
 			if (key.getCode().equals(KeyCode.A)) {
 				if (!keyPressed[1]) {
+					playerImage = "playerx32-left.png";
 					keyPressed[1] = true;
 					moveX -= speed;
 				}
 			}
 			if (key.getCode().equals(KeyCode.S)) {
 				if (!keyPressed[2]) {
+					playerImage = "playerx32.png";
 					keyPressed[2] = true;
 					moveY += speed;
 				}
 			}
 			if (key.getCode().equals(KeyCode.D)) {
 				if (!keyPressed[3]) {
+					playerImage = "playerx32.png";
 					keyPressed[3] = true;
 					moveX += speed;
 				}
@@ -140,7 +152,7 @@ public class GameView implements FireEventListener {
 			}
 
 		});
-		new AnimationTimer() {
+		this.anim = (new AnimationTimer() {
 
 			@Override
 			public void handle(long arg0) {
@@ -148,7 +160,12 @@ public class GameView implements FireEventListener {
 				updateDisplay(board);
 			}
 
-		}.start();
+		});
+		anim.start();
+	}
+	
+	public AnimationTimer giveMeIt() {
+		return anim;
 	}
 
 	private void movePlayer() {
@@ -294,6 +311,7 @@ public class GameView implements FireEventListener {
 							control.destroyProjectile(p);
 							if (player.getHealth() <= 0) {
 								player.onDeath();
+								control.removePlayer();
 							}
 						}
 					}

@@ -39,7 +39,10 @@ public class MainView {
 		gameLoad.load();
 		this.gameView = gameLoad.getController();
 		this.gameView.updateController(control);
-		this.gameView.createCanvas(board);
+	}
+	
+	public EndView getEndView() {
+		return this.endView;
 	}
 	
 	public void switchScene(SceneSelection selection){

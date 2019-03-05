@@ -36,6 +36,8 @@ public class GameController {
 	}
 
 	public void onPlay() {
+		board = new Board();
+		mainView.getGameView().createCanvas(board);
 		mainView.switchScene(SceneSelection.GAME_VIEW);
 		startSpawn();
 	}
@@ -50,6 +52,10 @@ public class GameController {
 
 	public void onQuit() {
 		mainView.getStage().close();
+	}
+	
+	public void onEnd() {
+		mainView.switchScene(SceneSelection.END_VIEW);
 	}
 
 	public void onApply(double difficulty, double sound) {
@@ -118,7 +124,9 @@ public class GameController {
 	}
 
 	public void removePlayer() {
-
+		mainView.getGameView().giveMeIt().stop();
+		mainView.getEndView().setPlayerScore(board.getPlayer().getScore());
+		onEnd();
 	}
 
 	public Board getBoard() {
