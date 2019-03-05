@@ -1,7 +1,5 @@
 package edu.neumont.hellraisers.javabullethell.ui;
 
-
-
 import java.io.File;
 
 import edu.neumont.hellraisers.javabullethell.GameController;
@@ -31,11 +29,11 @@ public class GameView implements FireEventListener {
 	private int moveX = 0;
 	private int moveY = 0;
 	private AudioClip sound = new AudioClip(new File("./src/main/resources/moistShot.mp3").toURI().toString());
-	private boolean[] keyPressed = {false,false,false,false};
-	private boolean[] attackPressed = {false,false,false,false};
+	private boolean[] keyPressed = { false, false, false, false };
+	private boolean[] attackPressed = { false, false, false, false };
 	private int attackCooldown = 0;
 	private boolean attacking = false;
-	
+
 	private final int speed = 10;
 	private final int playerBulletSpeed = 5;
 
@@ -138,7 +136,7 @@ public class GameView implements FireEventListener {
 					attacking = false;
 				}
 			}
-			
+
 		});
 		new AnimationTimer() {
 
@@ -146,7 +144,7 @@ public class GameView implements FireEventListener {
 			public void handle(long arg0) {
 				context.clearRect(0, 0, board.getWidth(), board.getHeight());
 				updateDisplay(board);
-				
+
 			}
 
 		}.start();
@@ -156,34 +154,43 @@ public class GameView implements FireEventListener {
 		control.getBoard().getPlayer().move(moveX, moveY);
 		int x = control.getBoard().getPlayer().getLocation().getX() + 40;
 		int y = control.getBoard().getPlayer().getLocation().getY() + 40;
-		if (x+1 > control.getBoard().getWidth()) {
-			control.getBoard().getPlayer().move(-1*moveX, 0);
-		}else if(x-20 < 0) {
-			control.getBoard().getPlayer().move(-1*moveX, 0);
+		if (x + 1 > control.getBoard().getWidth()) {
+			control.getBoard().getPlayer().move(-1 * moveX, 0);
+		} else if (x - 20 < 0) {
+			control.getBoard().getPlayer().move(-1 * moveX, 0);
 		}
-		if(y-30 < 0) {
-			control.getBoard().getPlayer().move(0, -1*moveY);
-		}else if(y+20 > control.getBoard().getHeight()) {
-			control.getBoard().getPlayer().move(0, -1*moveY);
+		if (y - 30 < 0) {
+			control.getBoard().getPlayer().move(0, -1 * moveY);
+		} else if (y + 20 > control.getBoard().getHeight()) {
+			control.getBoard().getPlayer().move(0, -1 * moveY);
 		}
 	}
+
 	private void arrowsPressed(Board board) {
 		int offsetX = 20;
 		int offsetY = 20;
 		if (attackCooldown > 10) {
 			attackCooldown = 0;
-		if (attackPressed[0]) {
-			control.createProjectile(ProjectileType.PLAYER_PROJECTILE, board.getPlayer().getLocation().getX() + offsetX, board.getPlayer().getLocation().getY() + offsetY, 0, -playerBulletSpeed);
-		}
-		if (attackPressed[1]) {
-			control.createProjectile(ProjectileType.PLAYER_PROJECTILE, board.getPlayer().getLocation().getX() + offsetX, board.getPlayer().getLocation().getY() + offsetY, -playerBulletSpeed,0);
-		}
-		if (attackPressed[2]) {
-			control.createProjectile(ProjectileType.PLAYER_PROJECTILE, board.getPlayer().getLocation().getX() + offsetX, board.getPlayer().getLocation().getY() + offsetY, 0, playerBulletSpeed);
-		}
-		if (attackPressed[3]) {
-			control.createProjectile(ProjectileType.PLAYER_PROJECTILE, board.getPlayer().getLocation().getX() + offsetX, board.getPlayer().getLocation().getY() + offsetY, playerBulletSpeed,0);
-		}
+			if (attackPressed[0]) {
+				control.createProjectile(ProjectileType.PLAYER_PROJECTILE,
+						board.getPlayer().getLocation().getX() + offsetX,
+						board.getPlayer().getLocation().getY() + offsetY, 0, -playerBulletSpeed);
+			}
+			if (attackPressed[1]) {
+				control.createProjectile(ProjectileType.PLAYER_PROJECTILE,
+						board.getPlayer().getLocation().getX() + offsetX,
+						board.getPlayer().getLocation().getY() + offsetY, -playerBulletSpeed, 0);
+			}
+			if (attackPressed[2]) {
+				control.createProjectile(ProjectileType.PLAYER_PROJECTILE,
+						board.getPlayer().getLocation().getX() + offsetX,
+						board.getPlayer().getLocation().getY() + offsetY, 0, playerBulletSpeed);
+			}
+			if (attackPressed[3]) {
+				control.createProjectile(ProjectileType.PLAYER_PROJECTILE,
+						board.getPlayer().getLocation().getX() + offsetX,
+						board.getPlayer().getLocation().getY() + offsetY, playerBulletSpeed, 0);
+			}
 		}
 	}
 
@@ -235,27 +242,32 @@ public class GameView implements FireEventListener {
 
 	private void drawProjectiles(Projectile[] projectiles) {
 		Image image = new Image("projectile.png");
+		Image playerProj = new Image("playerProjectile.png");
 		for (int index = 0; index < projectiles.length; index++) {
 			Projectile p = projectiles[index];
 			p.move();
-			context.drawImage(image, p.getLocation().getX(), p.getLocation().getY());
+			if (p.getProjectileType() == ProjectileType.ENEMY_PROJECTILE) {
+				context.drawImage(image, p.getLocation().getX(), p.getLocation().getY());
+			} else {
+				context.drawImage(playerProj, p.getLocation().getX(), p.getLocation().getY());
+			}
 			if (projectileCollision(p)) {
 				control.destroyProjectile(p);
 			}
 		}
 	}
-	
+
 	private boolean projectileCollision(Projectile p) {
 		if (p.getProjectileType() == ProjectileType.PLAYER_PROJECTILE) {
 			for (Enemy enemy : control.getBoard().getEnemies()) {
-				int x = enemy.getLocation().getX() + enemy.getWidth()/2;
-				int y = enemy.getLocation().getY() + enemy.getHeight()/2;
+				int x = enemy.getLocation().getX() + enemy.getWidth() / 2;
+				int y = enemy.getLocation().getY() + enemy.getHeight() / 2;
 				int pX = p.getLocation().getX();
 				int pY = p.getLocation().getY();
-				if (pX > x-enemy.getWidth()/2) {
-					if (pX < x+enemy.getWidth()/2) {
-						if (pY > y-enemy.getHeight()/2) {
-							if (pY < y+enemy.getHeight()/2) {
+				if (pX > x - enemy.getWidth() / 2) {
+					if (pX < x + enemy.getWidth() / 2) {
+						if (pY > y - enemy.getHeight() / 2) {
+							if (pY < y + enemy.getHeight() / 2) {
 								enemy.takeDamage(500);
 								if (enemy.getHealth() <= 0) {
 									control.removeEnemy(enemy);
@@ -267,8 +279,8 @@ public class GameView implements FireEventListener {
 					}
 				}
 			}
-		}else {
-			
+		} else {
+
 		}
 		return false;
 	}
@@ -280,9 +292,10 @@ public class GameView implements FireEventListener {
 	}
 
 	private void drawHealth(Entity entity) {
-		context.strokeRect(entity.getLocation().getX()-15,entity.getLocation().getY()-5,30,10);
+		context.strokeRect(entity.getLocation().getX() - 15, entity.getLocation().getY() - 5, 30, 10);
 		context.setFill(Color.FIREBRICK);
-		context.fillRect(entity.getLocation().getX()-14,entity.getLocation().getY()-4,28*(entity.getHealth()/(entity.getMaxHealth()*1D)),8);
+		context.fillRect(entity.getLocation().getX() - 14, entity.getLocation().getY() - 4,
+				28 * (entity.getHealth() / (entity.getMaxHealth() * 1D)), 8);
 	}
 
 	@Override
