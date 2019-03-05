@@ -11,13 +11,18 @@ import edu.neumont.hellraisers.javabullethell.model.Projectile;
 import edu.neumont.hellraisers.javabullethell.model.ProjectileType;
 import edu.neumont.hellraisers.javabullethell.model.SceneSelection;
 import edu.neumont.hellraisers.javabullethell.ui.MainView;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 
 public class GameController {
 	private Board board;
 	private MainView mainView;
 	private double difficulty = 2.0;
 	private double sound = 75.0;
-	private Thread spawnThread = new Thread();
+	private Thread spawnThread;
+	private Timeline spawnTimer;
 
 	public GameController(MainView view) {
 		this.mainView = view;
@@ -28,6 +33,12 @@ public class GameController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		this.spawnThread = new Thread();
+		this.spawnTimer = new Timeline(new KeyFrame(Duration.millis(15000/difficulty), e -> {
+			this.createWave();
+		}));
+		spawnTimer.setCycleCount(Animation.INDEFINITE);
 	}
 
 	public void init() throws InterruptedException {
@@ -38,7 +49,7 @@ public class GameController {
 
 	public void onPlay() {
 		mainView.switchScene(SceneSelection.GAME_VIEW);
-		createWave();
+		spawnTimer.play();
 	}
 
 	public void onOption() {
@@ -90,18 +101,17 @@ public class GameController {
 	}
 
 	public void createWave() {
-		int waveSize = (int) difficulty * 10;
+		int waveSize = (int) difficulty * 5 + 5;
 		int currentEne = board.getEnemies().size();
 		while (board.getEnemies().size() < waveSize + currentEne) {
 			synchronized (spawnThread) {
 				for (int i = 0; i < waveSize; i++) {
 					createEnemy();
-					try {
-						spawnThread.wait(75);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+//					try {
+//						spawnThread.wait(75);
+//					} catch (InterruptedException e) {
+//						e.printStackTrace();
+//					}
 				}
 			}
 		}
