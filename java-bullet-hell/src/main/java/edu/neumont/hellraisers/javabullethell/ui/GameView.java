@@ -217,8 +217,8 @@ public class GameView implements FireEventListener {
 		movePlayer();
 		arrowsPressed(board);
 		drawPlayer(board.getPlayer());
-		for (Enemy enemy : board.getEnemies()) {
-			drawEnemy(enemy);
+		for (int i = 0; i < board.getEnemies().size(); i++) {
+			drawEnemy(board.getEnemies().get(i));
 		}
 		Projectile[] temp = new Projectile[board.getProjectiles().size()];
 		temp = board.getProjectiles().toArray(temp);

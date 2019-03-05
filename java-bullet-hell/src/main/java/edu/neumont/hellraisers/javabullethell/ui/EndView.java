@@ -15,6 +15,10 @@ public class EndView {
 		this.control = gameController;
 	}
 	
+	public void setPlayerScore(long toSet) {
+		this.playerScore.setText("" + toSet);
+	}
+	
 	@FXML
 	public void onMenu() {
 		control.onMenu();
