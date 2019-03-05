@@ -47,6 +47,7 @@ public class GameView implements FireEventListener {
 	public void createCanvas(Board board) {
 		jukebox.setCycleCount(Animation.INDEFINITE);
 		jukebox.play();
+		jukebox.setVolume(control.getSound() / 100);
 		board.registerListener(this);
 		canvas = new Canvas(board.getWidth(), board.getHeight());
 		group = new Group(canvas);
@@ -318,6 +319,7 @@ public class GameView implements FireEventListener {
 							control.destroyProjectile(p);
 							if (player.getHealth() <= 0) {
 								jukebox.stop();
+								sound.stop();
 								player.onDeath();
 								control.removePlayer();
 							}
@@ -344,8 +346,8 @@ public class GameView implements FireEventListener {
 
 	@Override
 	public void projectileFired() {
-		if (!control.getBoard().getPlayer().isDead()){
+			sound.setVolume(control.getSound() / 100);
+			sound.setCycleCount(1);
 			sound.play();
-		}
 	}
 }

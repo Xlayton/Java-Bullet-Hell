@@ -25,20 +25,22 @@ public class Board {
 		update = new Timeline(new KeyFrame(Duration.millis(1), e -> {
 			for (Enemy en : enemies) {
 				for (int i = 0; i < en.getShots(); i++) {
-					if ((Math.abs(player.getLocation().getX() - en.getLocation().getX())) < Math.abs(player.getLocation().getY()
-							- en.getLocation().getY())) {
+					if ((Math.abs(player.getLocation().getX() - en.getLocation().getX())) < Math
+							.abs(player.getLocation().getY() - en.getLocation().getY())) {
 						if (player.getLocation().getY() < en.getLocation().getY()) {
 							this.projectiles.add(new Projectile(
 									new Coordinate(en.getLocation().getX() + en.getWidth() / 2,
 											en.getLocation().getY()),
 									ProjectileType.ENEMY_PROJECTILE, 0,
 									-ProjectileType.ENEMY_PROJECTILE.getDefaultVelY()));
+							gameView.projectileFired();
 						} else {
 							this.projectiles.add(new Projectile(
 									new Coordinate(en.getLocation().getX() + en.getWidth() / 2,
 											en.getLocation().getY()),
 									ProjectileType.ENEMY_PROJECTILE, 0,
 									ProjectileType.ENEMY_PROJECTILE.getDefaultVelY()));
+							gameView.projectileFired();
 						}
 					} else {
 						if (player.getLocation().getX() < en.getLocation().getX()) {
@@ -47,21 +49,26 @@ public class Board {
 											en.getLocation().getY()),
 									ProjectileType.ENEMY_PROJECTILE, -ProjectileType.ENEMY_PROJECTILE.getDefaultVelX(),
 									0));
+							gameView.projectileFired();
 						} else {
 							this.projectiles.add(new Projectile(
 									new Coordinate(en.getLocation().getX() + en.getWidth() / 2,
 											en.getLocation().getY()),
 									ProjectileType.ENEMY_PROJECTILE, ProjectileType.ENEMY_PROJECTILE.getDefaultVelX(),
 									0));
+							gameView.projectileFired();
 						}
 					}
 					en.setShots(en.getShots() - 1);
-					gameView.projectileFired();
 				}
 			}
 		}));
 		update.setCycleCount(Animation.INDEFINITE);
 		update.play();
+	}
+	
+	public void endTimeline() {
+		update.stop();
 	}
 
 	public void registerListener(FireEventListener gameView) {

@@ -124,6 +124,7 @@ public class GameController {
 	}
 
 	public void removePlayer() {
+		board.endTimeline();
 		mainView.getGameView().giveMeIt().stop();
 		mainView.getEndView().setPlayerScore(board.getPlayer().getScore());
 		onEnd();
