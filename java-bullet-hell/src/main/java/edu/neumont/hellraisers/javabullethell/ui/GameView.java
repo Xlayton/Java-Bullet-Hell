@@ -10,6 +10,7 @@ import edu.neumont.hellraisers.javabullethell.model.FireEventListener;
 import edu.neumont.hellraisers.javabullethell.model.Player;
 import edu.neumont.hellraisers.javabullethell.model.Projectile;
 import edu.neumont.hellraisers.javabullethell.model.ProjectileType;
+import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -18,6 +19,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 
 public class GameView implements FireEventListener {
@@ -30,6 +33,8 @@ public class GameView implements FireEventListener {
 	private int moveX = 0;
 	private int moveY = 0;
 	private AudioClip sound = new AudioClip(new File("./src/main/resources/moistShot.mp3").toURI().toString());
+	private Media backgroundSound = new Media(new File("./src/main/resources/sansundertale.mp3").toURI().toString());
+	private MediaPlayer jukebox = new MediaPlayer(backgroundSound);
 	private boolean[] keyPressed;
 	private boolean[] attackPressed;
 	private int attackCooldown;
@@ -40,6 +45,8 @@ public class GameView implements FireEventListener {
 	private final int playerBulletSpeed = 5;
 
 	public void createCanvas(Board board) {
+		jukebox.setCycleCount(Animation.INDEFINITE);
+		jukebox.play();
 		board.registerListener(this);
 		canvas = new Canvas(board.getWidth(), board.getHeight());
 		group = new Group(canvas);

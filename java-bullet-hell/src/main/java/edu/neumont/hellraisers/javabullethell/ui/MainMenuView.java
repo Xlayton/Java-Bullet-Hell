@@ -24,6 +24,11 @@ public class MainMenuView {
 	public void onOption() {
 		controller.onOption();
 	}
+	
+	@FXML
+	public void onQuit() {
+		controller.onQuit();
+	}
 
 	@FXML
 	public void onAbout() {
