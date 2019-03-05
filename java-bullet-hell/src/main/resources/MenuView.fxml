@@ -15,6 +15,7 @@
 				<Button styleClass="btn" onAction="#onPlay">Play</Button>
 				<Button styleClass="btn" onAction="#onOption">Options</Button>
 				<Button styleClass="btn" onAction="#onAbout">About</Button>
+				<Button styleClass="btn" onAction="#onQuit">Quit</Button>
 			</VBox>
 		</VBox>
 	</center>
