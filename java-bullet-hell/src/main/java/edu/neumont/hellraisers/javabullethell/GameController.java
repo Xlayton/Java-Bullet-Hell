@@ -127,6 +127,7 @@ public class GameController {
 		mainView.getGameView().giveMeIt().stop();
 		mainView.getEndView().setPlayerScore(board.getPlayer().getScore());
 		onEnd();
+		board = new Board();
 	}
 
 	public Board getBoard() {
