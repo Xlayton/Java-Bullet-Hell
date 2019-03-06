@@ -47,19 +47,15 @@ public class Enemy extends Entity{
 			if(moveUp && moveLeft) {
 				this.getLocation().addX(-2);
 				this.getLocation().addY(-2);
-				modelImage = (this.enemyType == EnemyType.BASIC) ? new Image("basicx32-back.png") : new Image("bigboix32-back.png");
 			} else if (moveUp && !moveLeft) {
 				this.getLocation().addX(2);
 				this.getLocation().addY(-2);
-				modelImage = (this.enemyType == EnemyType.BASIC) ? new Image("basicx32-back.png") : new Image("bigboix32-back.png");
 			} else if (!moveUp && moveLeft) {
 				this.getLocation().addX(-2);
 				this.getLocation().addY(2);
-				modelImage = (this.enemyType == EnemyType.BASIC) ? new Image("basicx32.png") : new Image("bigboix32.png");
 			} else {
 				this.getLocation().addX(2);
 				this.getLocation().addY(2);
-				modelImage = (this.enemyType == EnemyType.BASIC) ? new Image("basicx32-right.png") : new Image("bigboix32-right.png");
 			}
 		}));
 		moveTimer.setCycleCount(Animation.INDEFINITE);
