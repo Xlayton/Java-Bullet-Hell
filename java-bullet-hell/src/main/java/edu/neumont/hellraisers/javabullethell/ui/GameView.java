@@ -247,7 +247,7 @@ public class GameView implements FireEventListener {
 		for(int i = 0; i < items.size(); i++) {
 			Item item = items.get(i);
 			Coordinate itemLocation = item.getLocation();
-			if(//TODO hitboxing) {
+			if(new Rectangle(player.getLocation().getX(), player.getLocation().getY(), player.getWidth(), player.getHeight()).intersects(new Rectangle(itemLocation.getX(), itemLocation.getY(), item.getSize(), item.getSize()).getBoundsInLocal())) {
 				item.onPickup(player);
 				items.remove(item);
 			}
