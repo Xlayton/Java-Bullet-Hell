@@ -5,6 +5,7 @@ import java.io.File;
 import edu.neumont.hellraisers.javabullethell.GameController;
 import edu.neumont.hellraisers.javabullethell.model.Board;
 import edu.neumont.hellraisers.javabullethell.model.Enemy;
+import edu.neumont.hellraisers.javabullethell.model.EnemyType;
 import edu.neumont.hellraisers.javabullethell.model.Entity;
 import edu.neumont.hellraisers.javabullethell.model.FireEventListener;
 import edu.neumont.hellraisers.javabullethell.model.Player;
@@ -46,8 +47,8 @@ public class GameView implements FireEventListener {
 
 	public void createCanvas(Board board) {
 		jukebox.setCycleCount(Animation.INDEFINITE);
-		jukebox.play();
 		jukebox.setVolume(control.getSound() / 100);
+		jukebox.play();
 		board.registerListener(this);
 		canvas = new Canvas(board.getWidth(), board.getHeight());
 		group = new Group(canvas);
@@ -297,7 +298,11 @@ public class GameView implements FireEventListener {
 								enemy.takeDamage(p.getDamage());
 								if (enemy.getHealth() <= 0) {
 									control.removeEnemy(enemy);
-									control.getBoard().getPlayer().addScore(100L);
+									if (enemy.getEnemyType() == EnemyType.BASIC) {
+										control.getBoard().getPlayer().addScore(100L);
+									}else if(enemy.getEnemyType() == EnemyType.BIGBOI){
+										control.getBoard().getPlayer().addScore(250L);
+									}
 								}
 								return true;
 							}
@@ -346,8 +351,10 @@ public class GameView implements FireEventListener {
 
 	@Override
 	public void projectileFired() {
-			sound.setVolume(control.getSound() / 100);
-			sound.setCycleCount(1);
+		sound.setVolume(control.getSound() / 100);
+		sound.setCycleCount(1);
+		if (!control.getBoard().getPlayer().isDead()){
 			sound.play();
+		}
 	}
 }
