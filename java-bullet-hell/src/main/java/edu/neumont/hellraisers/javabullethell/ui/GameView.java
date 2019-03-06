@@ -45,6 +45,8 @@ public class GameView implements FireEventListener {
 	private int attackCooldown;
 	private boolean attacking;
 	private String playerImage;
+	private int bigBoi;
+	private boolean big;
 
 	private final int speed = 10;
 	private final int playerBulletSpeed = 5;
@@ -64,7 +66,9 @@ public class GameView implements FireEventListener {
 		attackPressed = new boolean[] { false, false, false, false };
 		attackCooldown = 0;
 		attacking = false;
+		bigBoi = 1;
 		playerImage = "playerx32.png";
+		big = false;
 		anim = null;
 
 		view.setOnKeyPressed(key -> {
@@ -171,6 +175,13 @@ public class GameView implements FireEventListener {
 			public void handle(long arg0) {
 				context.clearRect(0, 0, board.getWidth(), board.getHeight());
 				updateDisplay(board);
+				if (big) {
+					bigBoi++;
+				}
+				if (bigBoi > 12) {
+					bigBoi = 1;
+				}
+				big = !big;
 			}
 
 		});
@@ -269,11 +280,18 @@ public class GameView implements FireEventListener {
 	}
 
 	private void drawEnemy(Enemy enemy) {
-		Image image = enemy.getImage();
+			image = new Image("basicx32.png");
+			break;
+		case BIGBOI:
+			image = new Image("bigboix32" + bigBoi + ".png");
+			break;
+		default:
+			image = new Image("projectile.png");
+			break;
+		}
 		drawHealth(enemy);
 		context.drawImage(image, enemy.getLocation().getX(), enemy.getLocation().getY(), enemy.getWidth(),
 				enemy.getHeight());
-	}
 
 	private void drawItem(Item item) {
 		Image image = item.getImage();
