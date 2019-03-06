@@ -46,8 +46,8 @@ public class GameView implements FireEventListener {
 
 	public void createCanvas(Board board) {
 		jukebox.setCycleCount(Animation.INDEFINITE);
-		jukebox.play();
 		jukebox.setVolume(control.getSound() / 100);
+		jukebox.play();
 		board.registerListener(this);
 		canvas = new Canvas(board.getWidth(), board.getHeight());
 		group = new Group(canvas);
