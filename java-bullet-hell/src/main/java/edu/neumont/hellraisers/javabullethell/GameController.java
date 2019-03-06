@@ -10,6 +10,7 @@ import edu.neumont.hellraisers.javabullethell.model.EnemyType;
 import edu.neumont.hellraisers.javabullethell.model.Projectile;
 import edu.neumont.hellraisers.javabullethell.model.ProjectileType;
 import edu.neumont.hellraisers.javabullethell.model.SceneSelection;
+import edu.neumont.hellraisers.javabullethell.model.item.Heart;
 import edu.neumont.hellraisers.javabullethell.ui.MainView;
 
 public class GameController {
@@ -53,7 +54,7 @@ public class GameController {
 	public void onQuit() {
 		mainView.getStage().close();
 	}
-	
+
 	public void onEnd() {
 		mainView.switchScene(SceneSelection.END_VIEW);
 	}
@@ -84,37 +85,51 @@ public class GameController {
 					new Coordinate(board.getWidth(), new Random().nextInt(board.getHeight() + 1)), difficulty));
 			break;
 		case 3:
-			board.getEnemies()
-					.add(new Enemy(EnemyType.BIGBOI, new Coordinate(new Random().nextInt(board.getWidth()  + 1), -45), difficulty));
+			board.getEnemies().add(new Enemy(EnemyType.BIGBOI,
+					new Coordinate(new Random().nextInt(board.getWidth() + 1), -45), difficulty));
 			break;
 		case 4:
-			board.getEnemies()
-					.add(new Enemy(EnemyType.BIGBOI, new Coordinate(-45, new Random().nextInt(board.getHeight() + 1)), difficulty));
+			board.getEnemies().add(new Enemy(EnemyType.BIGBOI,
+					new Coordinate(-45, new Random().nextInt(board.getHeight() + 1)), difficulty));
 			break;
 		}
 	}
 
+	public void createHeart() {
+		board.getItems()
+				.add(new Heart(new Coordinate(new Random().nextInt(1500) + 200, new Random().nextInt(800) + 100), 32,
+						(int) (75 / difficulty)));
+	}
+
 	public void startSpawn() {
-		Thread enemySpawner = new Thread(new Runnable() {
-		    public void run() {
-		        while(!board.getPlayer().isDead()) {
-		            createEnemy();
-		            try {
-		                Thread.sleep(500);
-		            } catch (InterruptedException e) {
-		                e.printStackTrace();
-		            }
-		        }
-		    }
+		Thread spawner = new Thread(new Runnable() {
+			Random random = new Random();
+
+			public void run() {
+				while (!board.getPlayer().isDead()) {
+					int heartSpawnChance = random.nextInt(100) + 1;
+					if (board.getEnemies().size() < 35) {
+						createEnemy();
+					}
+					if (heartSpawnChance >= 80) {
+						createHeart();
+					}
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
 		});
-		enemySpawner.start();
+		spawner.start();
 	}
 
 	public void createPlayer() {
 
 	}
 
-	public void removeEnemy(Enemy enemy) { 
+	public void removeEnemy(Enemy enemy) {
 		for (int i = 0; i < board.getEnemies().size(); i++) {
 			if (enemy == board.getEnemies().get(i)) {
 				enemy.onDeath();

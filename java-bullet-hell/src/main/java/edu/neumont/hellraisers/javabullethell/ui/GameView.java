@@ -1,9 +1,11 @@
 package edu.neumont.hellraisers.javabullethell.ui;
 
 import java.io.File;
+import java.util.List;
 
 import edu.neumont.hellraisers.javabullethell.GameController;
 import edu.neumont.hellraisers.javabullethell.model.Board;
+import edu.neumont.hellraisers.javabullethell.model.Coordinate;
 import edu.neumont.hellraisers.javabullethell.model.Enemy;
 import edu.neumont.hellraisers.javabullethell.model.EnemyType;
 import edu.neumont.hellraisers.javabullethell.model.Entity;
@@ -11,6 +13,7 @@ import edu.neumont.hellraisers.javabullethell.model.FireEventListener;
 import edu.neumont.hellraisers.javabullethell.model.Player;
 import edu.neumont.hellraisers.javabullethell.model.Projectile;
 import edu.neumont.hellraisers.javabullethell.model.ProjectileType;
+import edu.neumont.hellraisers.javabullethell.model.item.Item;
 import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
@@ -23,6 +26,7 @@ import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 public class GameView implements FireEventListener {
 	private AnimationTimer anim;
@@ -56,8 +60,8 @@ public class GameView implements FireEventListener {
 		view = new Scene(group, board.getWidth(), board.getHeight());
 		moveX = 0;
 		moveY = 0;
-		keyPressed = new boolean[] {false,false,false,false};
-		attackPressed = new boolean[] {false,false,false,false};
+		keyPressed = new boolean[] { false, false, false, false };
+		attackPressed = new boolean[] { false, false, false, false };
 		attackCooldown = 0;
 		attacking = false;
 		playerImage = "playerx32.png";
@@ -172,7 +176,7 @@ public class GameView implements FireEventListener {
 		});
 		anim.start();
 	}
-	
+
 	public AnimationTimer giveMeIt() {
 		return anim;
 	}
@@ -226,19 +230,34 @@ public class GameView implements FireEventListener {
 		movePlayer();
 		arrowsPressed(board);
 		drawPlayer(board.getPlayer());
+		checkItemPickup(board.getPlayer(), board.getItems());
 		for (int i = 0; i < board.getEnemies().size(); i++) {
 			drawEnemy(board.getEnemies().get(i));
+		}
+		for (int i = 0; i < board.getItems().size(); i++) {
+			drawItem(board.getItems().get(i));
 		}
 		Projectile[] temp = new Projectile[board.getProjectiles().size()];
 		temp = board.getProjectiles().toArray(temp);
 		drawProjectiles(temp);
 		drawScore(board.getPlayer());
 	}
+	
+	public void checkItemPickup(Player player, List<Item> items) {
+		for(int i = 0; i < items.size(); i++) {
+			Item item = items.get(i);
+			Coordinate itemLocation = item.getLocation();
+			if(//TODO hitboxing) {
+				item.onPickup(player);
+				items.remove(item);
+			}
+		}
+	}
 
 	public void updateController(GameController control) {
 		this.control = control;
 	}
-
+ 
 	public Scene getView() {
 		return view;
 	}
@@ -250,21 +269,15 @@ public class GameView implements FireEventListener {
 	}
 
 	private void drawEnemy(Enemy enemy) {
-		Image image;
-		switch (enemy.getEnemyType()) {
-		case BASIC:
-			image = new Image("basicx32.png");
-			break;
-		case BIGBOI:
-			image = new Image("bigboix32.png");
-			break;
-		default:
-			image = new Image("projectile.png");
-			break;
-		}
+		Image image = enemy.getImage();
 		drawHealth(enemy);
 		context.drawImage(image, enemy.getLocation().getX(), enemy.getLocation().getY(), enemy.getWidth(),
 				enemy.getHeight());
+	}
+
+	private void drawItem(Item item) {
+		Image image = item.getImage();
+		context.drawImage(image, item.getLocation().getX(), item.getLocation().getY(), item.getSize(), item.getSize());
 	}
 
 	private void drawProjectiles(Projectile[] projectiles) {
@@ -285,8 +298,8 @@ public class GameView implements FireEventListener {
 	}
 
 	private boolean projectileCollision(Projectile p) {
-		int pX = p.getLocation().getX()+2;
-		int pY = p.getLocation().getY()+2;
+		int pX = p.getLocation().getX() + 2;
+		int pY = p.getLocation().getY() + 2;
 		if (p.getProjectileType() == ProjectileType.PLAYER_PROJECTILE) {
 			for (Enemy enemy : control.getBoard().getEnemies()) {
 				int x = enemy.getLocation().getX() + enemy.getWidth() / 2;
@@ -300,7 +313,7 @@ public class GameView implements FireEventListener {
 									control.removeEnemy(enemy);
 									if (enemy.getEnemyType() == EnemyType.BASIC) {
 										control.getBoard().getPlayer().addScore(100L);
-									}else if(enemy.getEnemyType() == EnemyType.BIGBOI){
+									} else if (enemy.getEnemyType() == EnemyType.BIGBOI) {
 										control.getBoard().getPlayer().addScore(250L);
 									}
 								}
@@ -314,12 +327,12 @@ public class GameView implements FireEventListener {
 			int x = control.getBoard().getPlayer().getLocation().getX();
 			int y = control.getBoard().getPlayer().getLocation().getY();
 			Player player = control.getBoard().getPlayer();
-			x+=player.getWidth();
-			y+=player.getHeight();
+			x += player.getWidth();
+			y += player.getHeight();
 			if (pX > x - player.getWidth() + 5) {
-				if (pX < x + player.getWidth()-5) {
-					if (pY > y - player.getHeight()+5) {
-						if (pY < y + player.getHeight()-5){
+				if (pX < x + player.getWidth() - 5) {
+					if (pY > y - player.getHeight() + 5) {
+						if (pY < y + player.getHeight() - 5) {
 							player.takeDamage(p.getDamage());
 							control.destroyProjectile(p);
 							if (player.getHealth() <= 0) {
@@ -353,7 +366,7 @@ public class GameView implements FireEventListener {
 	public void projectileFired() {
 		sound.setVolume(control.getSound() / 100);
 		sound.setCycleCount(1);
-		if (!control.getBoard().getPlayer().isDead()){
+		if (!control.getBoard().getPlayer().isDead()) {
 			sound.play();
 		}
 	}

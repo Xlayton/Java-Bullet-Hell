@@ -3,6 +3,7 @@ package edu.neumont.hellraisers.javabullethell.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.neumont.hellraisers.javabullethell.model.item.Item;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -16,12 +17,14 @@ public class Board {
 	private Player player;
 	private List<Enemy> enemies;
 	private List<Projectile> projectiles;
+	private List<Item> items;
 	private Timeline update;
 
 	public Board() {
 		this.player = new Player(new Coordinate(BOARD_WIDTH / 2, BOARD_HEIGHT / 2));
 		this.enemies = new ArrayList<>();
 		this.projectiles = new ArrayList<>();
+		this.items = new ArrayList<>();
 		update = new Timeline(new KeyFrame(Duration.millis(1), e -> {
 			for (Enemy en : enemies) {
 				for (int i = 0; i < en.getShots(); i++) {
@@ -83,6 +86,10 @@ public class Board {
 		return projectiles;
 	}
 
+	public List<Item> getItems() {
+		return items;
+	}
+	
 	public Player getPlayer() {
 		return player;
 	}
