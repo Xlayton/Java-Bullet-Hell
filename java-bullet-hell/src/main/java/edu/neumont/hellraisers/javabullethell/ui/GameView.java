@@ -280,6 +280,9 @@ public class GameView implements FireEventListener {
 	}
 
 	private void drawEnemy(Enemy enemy) {
+		Image image;
+		switch(enemy.getEnemyType()) {
+		case BASIC:
 			image = new Image("basicx32.png");
 			break;
 		case BIGBOI:
@@ -292,6 +295,7 @@ public class GameView implements FireEventListener {
 		drawHealth(enemy);
 		context.drawImage(image, enemy.getLocation().getX(), enemy.getLocation().getY(), enemy.getWidth(),
 				enemy.getHeight());
+	}
 
 	private void drawItem(Item item) {
 		Image image = item.getImage();
