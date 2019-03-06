@@ -14,6 +14,12 @@
 			<organization>Neumont College of Computer Science</organization>
 			<timezone>MST</timezone>
 		</contributor>
+		<contributor>
+			<name>Oscar Cabrera-Luna</name>
+			<email>ocabreraluna@gstudent.neumont.edu</email>
+			<organization>Neumont College of Computer Science</organization>
+			<timezone>MST</timezone>
+		</contributor>
 	</contributors>
 	<packaging>jar</packaging>
 	<properties>
