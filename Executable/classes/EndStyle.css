@@ -1,0 +1,19 @@
+BorderPane {
+	-fx-min-width: 1920px;
+	-fx-min-height: 1080px;
+}
+
+.btn {
+	-fx-background-color: #BBBBBB;
+	-fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.9) , 2, 0.0 , 0 , 1 );
+	-fx-min-height:100px;
+	-fx-min-width: 600px;
+	-fx-border-color: #000;
+	-fx-border-width: 1px;
+	-fx-border-style: solid;
+	-fx-font-size: 24px;
+}
+
+.endLabel {
+	-fx-font-size: 48px;
+}
