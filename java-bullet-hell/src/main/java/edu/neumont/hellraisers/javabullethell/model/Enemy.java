@@ -20,7 +20,7 @@ public class Enemy extends Entity{
 		super(enemyType.getHealth(), enemyType.getWidth(), enemyType.getHeight(), location);
 		this.enemyType = enemyType;
 		this.numShotsToShoot = 0;
-		this.shootTimer = new Timeline(new KeyFrame(Duration.millis(2400/difficulty), e -> {
+		this.shootTimer = new Timeline(new KeyFrame(Duration.millis(3200/difficulty), e -> {
 			numShotsToShoot++;
 		}));
 		shootTimer.setCycleCount(Animation.INDEFINITE);
