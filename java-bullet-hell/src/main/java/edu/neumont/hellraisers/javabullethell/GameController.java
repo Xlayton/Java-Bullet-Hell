@@ -127,8 +127,9 @@ public class GameController {
 					if (heartSpawnChance >= 85 && board.getItems().size() < 10) {
 						createHeart();
 					}
-					if (tripleSpawnChance >= 1 && board.getItems().size() < 10) {
+					if (tripleSpawnChance >= 95 && board.getItems().size() < 10) {
 						createTriple();
+					}
 					if (heartSpawnChance >= 95 && board.getItems().size() < 10) {
 						createSpeed();
 					}
