@@ -49,7 +49,6 @@ public class GameView implements FireEventListener {
 	private int regBoi;
 	private boolean big;
 
-	private final int speed = 10;
 	private final int playerBulletSpeed = 5;
 
 	public void createCanvas(Board board) {
@@ -78,28 +77,28 @@ public class GameView implements FireEventListener {
 				if (!keyPressed[0]) {
 					playerImage = "playerx32-back.png";
 					keyPressed[0] = true;
-					moveY -= speed;
+					moveY -= board.getPlayer().getSpeed();
 				}
 			}
 			if (key.getCode().equals(KeyCode.A)) {
 				if (!keyPressed[1]) {
 					playerImage = "playerx32-left.png";
 					keyPressed[1] = true;
-					moveX -= speed;
+					moveX -= board.getPlayer().getSpeed();
 				}
 			}
 			if (key.getCode().equals(KeyCode.S)) {
 				if (!keyPressed[2]) {
 					playerImage = "playerx32.png";
 					keyPressed[2] = true;
-					moveY += speed;
+					moveY += board.getPlayer().getSpeed();
 				}
 			}
 			if (key.getCode().equals(KeyCode.D)) {
 				if (!keyPressed[3]) {
 					playerImage = "playerx32.png";
 					keyPressed[3] = true;
-					moveX += speed;
+					moveX += board.getPlayer().getSpeed();
 				}
 			}
 			if (key.getCode().equals(KeyCode.UP) && !attacking) {
@@ -131,19 +130,35 @@ public class GameView implements FireEventListener {
 		view.setOnKeyReleased(key -> {
 			if (key.getCode().equals(KeyCode.W)) {
 				keyPressed[0] = false;
-				moveY += speed;
+				if(keyPressed[2]) {
+					moveY = board.getPlayer().getSpeed();
+				} else {
+					moveY = 0;
+				}
 			}
 			if (key.getCode().equals(KeyCode.A)) {
 				keyPressed[1] = false;
-				moveX += speed;
+				if(keyPressed[3]) {
+					moveX = board.getPlayer().getSpeed();
+				} else {
+					moveX = 0;
+				}
 			}
 			if (key.getCode().equals(KeyCode.S)) {
 				keyPressed[2] = false;
-				moveY -= speed;
+				if(keyPressed[0]) {
+					moveY = -board.getPlayer().getSpeed();
+				} else {
+					moveY = 0;
+				}
 			}
 			if (key.getCode().equals(KeyCode.D)) {
 				keyPressed[3] = false;
-				moveX -= speed;
+				if(keyPressed[1]) {
+					moveX = -board.getPlayer().getSpeed();
+				} else {
+					moveX = 0;
+				}
 			}
 			if (key.getCode().equals(KeyCode.UP)) {
 				if (attackPressed[0] && attacking) {

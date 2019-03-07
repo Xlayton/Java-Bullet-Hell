@@ -5,11 +5,13 @@ public class Player extends Entity {
 	private static final int baseWidth = 32;
 	private static final int baseHeight = 32;
 	
+	private int speed;
 	private long score;
 	
 	public Player(Coordinate location) {
 		super(baseHealth, baseWidth, baseHeight, location);
 		this.score = 0L;
+		this.setSpeed(10);
 	}
 
 	
@@ -29,5 +31,17 @@ public class Player extends Entity {
 	
 	public void addScore(long points) {
 		score += points;
+	}
+
+
+	public int getSpeed() {
+		return speed;
+	}
+	
+	public void setSpeed(int speed) {
+		if(speed >= 20) {
+			speed = 20;
+		}
+		this.speed = speed;
 	}
 }
