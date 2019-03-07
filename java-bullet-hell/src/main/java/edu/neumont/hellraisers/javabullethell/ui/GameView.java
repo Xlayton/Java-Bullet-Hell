@@ -37,8 +37,8 @@ public class GameView implements FireEventListener {
 	private GameController control;
 	private int moveX = 0;
 	private int moveY = 0;
-	private AudioClip sound = new AudioClip(new File("./src/main/resources/moistShot.mp3").toURI().toString());
-	private Media backgroundSound = new Media(new File("./src/main/resources/sansundertale.mp3").toURI().toString());
+	private AudioClip sound = new AudioClip(this.getClass().getClassLoader().getResource("moistShot.mp3").toString());
+	private Media backgroundSound = new Media(this.getClass().getClassLoader().getResource("sansundertale.mp3").toString());
 	private MediaPlayer jukebox = new MediaPlayer(backgroundSound);
 	private boolean[] keyPressed;
 	private boolean[] attackPressed;
@@ -52,6 +52,7 @@ public class GameView implements FireEventListener {
 	private final int playerBulletSpeed = 5;
 
 	public void createCanvas(Board board) {
+		try {
 		jukebox.setCycleCount(Animation.INDEFINITE);
 		jukebox.setVolume(control.getSound() / 100);
 		jukebox.play();
@@ -207,6 +208,9 @@ public class GameView implements FireEventListener {
 
 		});
 		anim.start();
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
 	public AnimationTimer giveMeIt() {
@@ -445,7 +449,7 @@ public class GameView implements FireEventListener {
 
 	@Override
 	public void projectileFired() {
-		sound.setVolume(control.getSound() / 100);
+		sound.setVolume(control.getSound() / 200);
 		sound.setCycleCount(1);
 		if (!control.getBoard().getPlayer().isDead()) {
 			sound.play();
