@@ -7,11 +7,21 @@ public class Player extends Entity {
 	
 	private int speed;
 	private long score;
+	private boolean tripleShot;
 	
 	public Player(Coordinate location) {
 		super(baseHealth, baseWidth, baseHeight, location);
 		this.score = 0L;
+		tripleShot = false;
 		this.setSpeed(10);
+	}
+	
+	public void toggleTripleShot() {
+		tripleShot = !tripleShot;
+	}
+	
+	public boolean getTripleShot() {
+		return this.tripleShot;
 	}
 
 	
