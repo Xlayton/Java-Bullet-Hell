@@ -12,7 +12,6 @@ import edu.neumont.hellraisers.javabullethell.model.ProjectileType;
 import edu.neumont.hellraisers.javabullethell.model.SceneSelection;
 import edu.neumont.hellraisers.javabullethell.model.item.Heart;
 import edu.neumont.hellraisers.javabullethell.model.item.TripleShot;
-import edu.neumont.hellraisers.javabullethell.model.item.SpeedUp;
 import edu.neumont.hellraisers.javabullethell.ui.MainView;
 
 public class GameController {
@@ -107,10 +106,6 @@ public class GameController {
 		board.getItems()
 		.add(new TripleShot(new Coordinate(new Random().nextInt(1500) + 200, new Random().nextInt(800) + 100), 32));
 	}
-
-	public void createSpeed() {
-		board.getItems().add(new SpeedUp(new Coordinate(new Random().nextInt(1500) + 200, new Random().nextInt(800) + 100)));
-	}
 	
 	public void startSpawn() {
 		Thread spawner = new Thread(new Runnable() {
@@ -120,18 +115,14 @@ public class GameController {
 				while (!board.getPlayer().isDead()) {
 					int heartSpawnChance = random.nextInt(100) + 1;
 					int tripleSpawnChance = random.nextInt(100) + 1;
-					int speedSpawnChance = random.nextInt(100) + 1;
 					if (board.getEnemies().size() < 50) {
 						createEnemy();
 					}
-					if (heartSpawnChance >= 85 && board.getItems().size() < 10) {
+					if (heartSpawnChance >= 89 && board.getItems().size() < 10) {
 						createHeart();
 					}
-					if (tripleSpawnChance >= 95 && board.getItems().size() < 10) {
+					if (tripleSpawnChance >= 99 && board.getItems().size() < 10) {
 						createTriple();
-					}
-					if (speedSpawnChance >= 95 && board.getItems().size() < 10) {
-						createSpeed();
 					}
 					try {
 						Thread.sleep(500);
