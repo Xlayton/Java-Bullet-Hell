@@ -6,10 +6,20 @@ public class Player extends Entity {
 	private static final int baseHeight = 32;
 	
 	private long score;
+	private boolean tripleShot;
 	
 	public Player(Coordinate location) {
 		super(baseHealth, baseWidth, baseHeight, location);
 		this.score = 0L;
+		tripleShot = false;
+	}
+	
+	public void toggleTripleShot() {
+		tripleShot = !tripleShot;
+	}
+	
+	public boolean getTripleShot() {
+		return this.tripleShot;
 	}
 
 	

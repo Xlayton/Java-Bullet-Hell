@@ -158,7 +158,7 @@ public class GameView implements FireEventListener {
 				}
 			}
 			if (key.getCode().equals(KeyCode.DOWN) && attacking) {
-				if (attackPressed[2]) {
+				if (attackPressed[2]) {   
 					attackPressed[2] = false;
 					attacking = false;
 				}
@@ -223,21 +223,56 @@ public class GameView implements FireEventListener {
 				control.createProjectile(ProjectileType.PLAYER_PROJECTILE,
 						board.getPlayer().getLocation().getX() + offsetX,
 						board.getPlayer().getLocation().getY() + offsetY, 0, -playerBulletSpeed);
+				if (board.getPlayer().getTripleShot()) {
+					control.createProjectile(ProjectileType.PLAYER_PROJECTILE,
+							board.getPlayer().getLocation().getX() + offsetX,
+							board.getPlayer().getLocation().getY() + offsetY, -playerBulletSpeed/3, -playerBulletSpeed);
+					control.createProjectile(ProjectileType.PLAYER_PROJECTILE,
+							board.getPlayer().getLocation().getX() + offsetX,
+							board.getPlayer().getLocation().getY() + offsetY, playerBulletSpeed/3, -playerBulletSpeed);
+				}
 			}
 			if (attackPressed[1]) {
 				control.createProjectile(ProjectileType.PLAYER_PROJECTILE,
 						board.getPlayer().getLocation().getX() + offsetX,
 						board.getPlayer().getLocation().getY() + offsetY, -playerBulletSpeed, 0);
+				if (board.getPlayer().getTripleShot()) {
+					control.createProjectile(ProjectileType.PLAYER_PROJECTILE,
+							board.getPlayer().getLocation().getX() + offsetX,
+							board.getPlayer().getLocation().getY() + offsetY, -playerBulletSpeed, -playerBulletSpeed/3);
+					control.createProjectile(ProjectileType.PLAYER_PROJECTILE,
+							board.getPlayer().getLocation().getX() + offsetX,
+							board.getPlayer().getLocation().getY() + offsetY, -playerBulletSpeed, playerBulletSpeed/3);
+				}
+				
 			}
 			if (attackPressed[2]) {
 				control.createProjectile(ProjectileType.PLAYER_PROJECTILE,
 						board.getPlayer().getLocation().getX() + offsetX,
 						board.getPlayer().getLocation().getY() + offsetY, 0, playerBulletSpeed);
+				if (board.getPlayer().getTripleShot()) {
+					control.createProjectile(ProjectileType.PLAYER_PROJECTILE,
+							board.getPlayer().getLocation().getX() + offsetX,
+							board.getPlayer().getLocation().getY() + offsetY, -playerBulletSpeed/3, playerBulletSpeed);
+					control.createProjectile(ProjectileType.PLAYER_PROJECTILE,
+							board.getPlayer().getLocation().getX() + offsetX,
+							board.getPlayer().getLocation().getY() + offsetY, playerBulletSpeed/3, playerBulletSpeed);
+				}
+				
 			}
 			if (attackPressed[3]) {
 				control.createProjectile(ProjectileType.PLAYER_PROJECTILE,
 						board.getPlayer().getLocation().getX() + offsetX,
 						board.getPlayer().getLocation().getY() + offsetY, playerBulletSpeed, 0);
+				if (board.getPlayer().getTripleShot()) {
+					control.createProjectile(ProjectileType.PLAYER_PROJECTILE,
+							board.getPlayer().getLocation().getX() + offsetX,
+							board.getPlayer().getLocation().getY() + offsetY, playerBulletSpeed, -playerBulletSpeed/3);
+					control.createProjectile(ProjectileType.PLAYER_PROJECTILE,
+							board.getPlayer().getLocation().getX() + offsetX,
+							board.getPlayer().getLocation().getY() + offsetY, playerBulletSpeed, playerBulletSpeed/3);
+				}
+				
 			}
 		}
 	}

@@ -11,6 +11,7 @@ import edu.neumont.hellraisers.javabullethell.model.Projectile;
 import edu.neumont.hellraisers.javabullethell.model.ProjectileType;
 import edu.neumont.hellraisers.javabullethell.model.SceneSelection;
 import edu.neumont.hellraisers.javabullethell.model.item.Heart;
+import edu.neumont.hellraisers.javabullethell.model.item.TripleShot;
 import edu.neumont.hellraisers.javabullethell.ui.MainView;
 
 public class GameController {
@@ -100,6 +101,11 @@ public class GameController {
 				.add(new Heart(new Coordinate(new Random().nextInt(1500) + 200, new Random().nextInt(800) + 100), 32,
 						(int) (75 / difficulty)));
 	}
+	
+	public void createTriple() {
+		board.getItems()
+		.add(new TripleShot(new Coordinate(new Random().nextInt(1500) + 200, new Random().nextInt(800) + 100), 32));
+	}
 
 	public void startSpawn() {
 		Thread spawner = new Thread(new Runnable() {
@@ -108,11 +114,15 @@ public class GameController {
 			public void run() {
 				while (!board.getPlayer().isDead()) {
 					int heartSpawnChance = random.nextInt(100) + 1;
+					int tripleSpawnChance = random.nextInt(100) + 1;
 					if (board.getEnemies().size() < 50) {
 						createEnemy();
 					}
 					if (heartSpawnChance >= 85 && board.getItems().size() < 10) {
 						createHeart();
+					}
+					if (tripleSpawnChance >= 1 && board.getItems().size() < 10) {
+						createTriple();
 					}
 					try {
 						Thread.sleep(500);
