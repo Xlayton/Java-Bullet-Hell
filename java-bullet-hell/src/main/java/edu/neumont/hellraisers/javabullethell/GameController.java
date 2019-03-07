@@ -108,10 +108,10 @@ public class GameController {
 			public void run() {
 				while (!board.getPlayer().isDead()) {
 					int heartSpawnChance = random.nextInt(100) + 1;
-					if (board.getEnemies().size() < 35) {
+					if (board.getEnemies().size() < 50) {
 						createEnemy();
 					}
-					if (heartSpawnChance >= 80) {
+					if (heartSpawnChance >= 85 && board.getItems().size() < 10) {
 						createHeart();
 					}
 					try {

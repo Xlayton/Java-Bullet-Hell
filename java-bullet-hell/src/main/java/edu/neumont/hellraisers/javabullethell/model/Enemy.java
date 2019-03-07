@@ -28,12 +28,12 @@ public class Enemy extends Entity{
 		shootTimer.setCycleCount(Animation.INDEFINITE);
 		shootTimer.play();
 		this.moveTimer = new Timeline(new KeyFrame(Duration.millis(25), e -> {
-			if(this.getLocation().getX() >= 800) {
+			if(this.getLocation().getX() >= 1920) {
 				moveLeft = true;
 			} else if (this.getLocation().getX() <= 0) {
 				moveLeft = false;
 			}
-			if(this.getLocation().getY() >= 800) {
+			if(this.getLocation().getY() >= 1080) {
 				moveUp = true;
 			} else if (this.getLocation().getY() <= 0) {
 				moveUp = false;

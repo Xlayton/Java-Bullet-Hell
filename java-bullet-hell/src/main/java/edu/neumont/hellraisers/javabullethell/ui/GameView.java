@@ -46,6 +46,7 @@ public class GameView implements FireEventListener {
 	private boolean attacking;
 	private String playerImage;
 	private int bigBoi;
+	private int regBoi;
 	private boolean big;
 
 	private final int speed = 10;
@@ -67,6 +68,7 @@ public class GameView implements FireEventListener {
 		attackCooldown = 0;
 		attacking = false;
 		bigBoi = 1;
+		regBoi = 1;
 		playerImage = "playerx32.png";
 		big = false;
 		anim = null;
@@ -182,6 +184,10 @@ public class GameView implements FireEventListener {
 					bigBoi = 1;
 				}
 				big = !big;
+				if(bigBoi % 2 == 0) {
+					regBoi++;
+					regBoi %= 6;
+				}
 			}
 
 		});
@@ -253,12 +259,15 @@ public class GameView implements FireEventListener {
 		drawProjectiles(temp);
 		drawScore(board.getPlayer());
 	}
-	
+
 	public void checkItemPickup(Player player, List<Item> items) {
-		for(int i = 0; i < items.size(); i++) {
+		for (int i = 0; i < items.size(); i++) {
 			Item item = items.get(i);
 			Coordinate itemLocation = item.getLocation();
-			if(new Rectangle(player.getLocation().getX(), player.getLocation().getY(), player.getWidth(), player.getHeight()).intersects(new Rectangle(itemLocation.getX(), itemLocation.getY(), item.getSize(), item.getSize()).getBoundsInLocal())) {
+			if (new Rectangle(player.getLocation().getX(), player.getLocation().getY(), player.getWidth(),
+					player.getHeight()).intersects(
+							new Rectangle(itemLocation.getX(), itemLocation.getY(), item.getSize(), item.getSize())
+									.getBoundsInLocal())) {
 				item.onPickup(player);
 				items.remove(item);
 			}
@@ -268,7 +277,7 @@ public class GameView implements FireEventListener {
 	public void updateController(GameController control) {
 		this.control = control;
 	}
- 
+
 	public Scene getView() {
 		return view;
 	}
@@ -281,9 +290,9 @@ public class GameView implements FireEventListener {
 
 	private void drawEnemy(Enemy enemy) {
 		Image image;
-		switch(enemy.getEnemyType()) {
+		switch (enemy.getEnemyType()) {
 		case BASIC:
-			image = new Image("basicx32.png");
+			image = new Image("basicx32-" + regBoi +  ".png");
 			break;
 		case BIGBOI:
 			image = new Image("bigboix32" + bigBoi + ".png");
