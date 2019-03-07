@@ -4,16 +4,16 @@ import edu.neumont.hellraisers.javabullethell.model.Coordinate;
 import edu.neumont.hellraisers.javabullethell.model.Player;
 import javafx.scene.image.Image;
 
-public class Heart extends Item {
-	private int amtHealed;
+public class SpeedUp extends Item{
 
-	public Heart(Coordinate location, int amtHealed) {
-		super(new Image("heart.png"), location, 32);
-		this.amtHealed = amtHealed;
+	public SpeedUp(Coordinate location) {
+		super(new Image("speedUp.png"), location, 32);
 	}
 
 	@Override
 	public void onPickup(Player player) {
-		player.gainHealth(amtHealed);
+		player.setSpeed(player.getSpeed() + 2);
+		
 	}
+
 }
